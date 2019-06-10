@@ -16,8 +16,10 @@ namespace MartialArts.Models
 
         public bool IsTesting { get; set; }
 
+        [DataType(DataType.DateTime)]
         public DateTime StartTime { get; set; }
 
+        [DataType(DataType.DateTime)]
         public DateTime EndTime { get; set; }
 
         public string Description { get; set; }

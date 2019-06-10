@@ -11,8 +11,10 @@ namespace MartialArts.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [DataType(DataType.Time)]
         public DateTime StartTime { get; set; }
         [Required]
+        [DataType(DataType.Time)]
         public DateTime EndTime { get; set; }
 
         //write custom validator to keep this in days of the week
