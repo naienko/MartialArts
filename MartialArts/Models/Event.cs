@@ -31,8 +31,5 @@ namespace MartialArts.Models
         public Student Staff { get; set; }
 
         public virtual ICollection<Style> Styles { get; set; }
-
-
-
     }
 }
