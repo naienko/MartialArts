@@ -24,6 +24,7 @@ namespace MartialArts.Models
 
         [Phone]
         public string Phone { get; set; }
+
         [Required]
         [EmailAddress]
         public string Email { get; set; }
@@ -34,6 +35,7 @@ namespace MartialArts.Models
 
         public int InternalRankId { get; set; }
 
+        [Required]
         public virtual ICollection<StudentStyle> StudentStyle { get; set; }
         public virtual ICollection<Style> Styles { get; set; }
 
@@ -43,5 +45,6 @@ namespace MartialArts.Models
         public virtual ICollection<Form> Forms { get; set; }
 
         public virtual ICollection<attendance_test> Attendance_Test { get; set; }
+        public virtual ICollection<attendance_class> Attendance_Classes { get; set; }
     }
 }
