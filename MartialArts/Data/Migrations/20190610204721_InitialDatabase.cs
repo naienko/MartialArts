@@ -154,13 +154,13 @@ namespace MartialArts.Data.Migrations
                         column: x => x.EventId,
                         principalTable: "Event",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Attendance_Test_Student_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Student",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,13 +180,13 @@ namespace MartialArts.Data.Migrations
                         column: x => x.EventId,
                         principalTable: "Event",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_EventStyle_Style_StyleId",
                         column: x => x.StyleId,
                         principalTable: "Style",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,13 +206,13 @@ namespace MartialArts.Data.Migrations
                         column: x => x.ClassId,
                         principalTable: "Class",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Attendance_Class_Student_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Student",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,13 +266,13 @@ namespace MartialArts.Data.Migrations
                         column: x => x.StudentId,
                         principalTable: "Student",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentStyle_Style_StyleId",
                         column: x => x.StyleId,
                         principalTable: "Style",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -293,13 +293,13 @@ namespace MartialArts.Data.Migrations
                         column: x => x.FormId,
                         principalTable: "Form",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentForms_Student_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Student",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentForms_Style_StyleId",
                         column: x => x.StyleId,
@@ -311,7 +311,7 @@ namespace MartialArts.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "Address", "FirstName", "LastName", "Phone" },
-                values: new object[] { "07df3208-07fc-4661-920c-8e1f02316760", 0, "d0053eb2-e654-4aeb-842f-2b84c7b9b4fc", "ApplicationUser", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEKH1qLZDHRXnPDm5oKhlHtAg9rJoBCHfVj8MTfutHm0ugkZZZ5rtByo3HM5Of1pwgA==", null, false, "782abf4a-0990-432c-b547-71297ecf01e4", false, "admin@admin.com", "3804 Round Rock Dr Antioch TN 37013", "Panya", "Farnette", "(615) 438-2777" });
+                values: new object[] { "3a55babf-d047-4978-b5df-0f27280127bc", 0, "b361e5a8-f9e3-497d-8e5a-903f08a8d777", "ApplicationUser", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAENIepB8Ji5a2HIHBsLy45T0cxAXba+i2PXqyiomejudhDap66upouNDrQ8IvvKhchg==", null, false, "a74cb432-ef51-4c44-81d1-102eade258cc", false, "admin@admin.com", "3804 Round Rock Dr Antioch TN 37013", "Panya", "Farnette", "(615) 438-2777" });
 
             migrationBuilder.InsertData(
                 table: "Rank",
@@ -488,7 +488,7 @@ namespace MartialArts.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "07df3208-07fc-4661-920c-8e1f02316760");
+                keyValue: "3a55babf-d047-4978-b5df-0f27280127bc");
 
             migrationBuilder.DropColumn(
                 name: "Address",

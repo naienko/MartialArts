@@ -554,17 +554,17 @@ namespace MartialArts.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "07df3208-07fc-4661-920c-8e1f02316760",
+                            Id = "3a55babf-d047-4978-b5df-0f27280127bc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d0053eb2-e654-4aeb-842f-2b84c7b9b4fc",
+                            ConcurrencyStamp = "b361e5a8-f9e3-497d-8e5a-903f08a8d777",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKH1qLZDHRXnPDm5oKhlHtAg9rJoBCHfVj8MTfutHm0ugkZZZ5rtByo3HM5Of1pwgA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENIepB8Ji5a2HIHBsLy45T0cxAXba+i2PXqyiomejudhDap66upouNDrQ8IvvKhchg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "782abf4a-0990-432c-b547-71297ecf01e4",
+                            SecurityStamp = "a74cb432-ef51-4c44-81d1-102eade258cc",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com",
                             Address = "3804 Round Rock Dr Antioch TN 37013",
@@ -595,12 +595,12 @@ namespace MartialArts.Data.Migrations
                     b.HasOne("MartialArts.Models.Event", "Event")
                         .WithMany("Style")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MartialArts.Models.Style", "Style")
                         .WithMany("Events")
                         .HasForeignKey("StyleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("MartialArts.Models.Form", b =>
@@ -629,12 +629,12 @@ namespace MartialArts.Data.Migrations
                     b.HasOne("MartialArts.Models.Form", "Form")
                         .WithMany("Students")
                         .HasForeignKey("FormId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MartialArts.Models.Student", "Student")
                         .WithMany("Forms")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MartialArts.Models.Style", "Style")
                         .WithMany("Forms")
@@ -652,12 +652,12 @@ namespace MartialArts.Data.Migrations
                     b.HasOne("MartialArts.Models.Student", "Student")
                         .WithMany("Styles")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MartialArts.Models.Style", "Style")
                         .WithMany("Students")
                         .HasForeignKey("StyleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("MartialArts.Models.attendance_class", b =>
@@ -665,12 +665,12 @@ namespace MartialArts.Data.Migrations
                     b.HasOne("MartialArts.Models.Class", "Class")
                         .WithMany("Attendance_Classes")
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MartialArts.Models.Student", "Student")
                         .WithMany("Attendance_Classes")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("MartialArts.Models.attendance_test", b =>
@@ -678,12 +678,12 @@ namespace MartialArts.Data.Migrations
                     b.HasOne("MartialArts.Models.Event", "Event")
                         .WithMany("Attendance_Test")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MartialArts.Models.Student", "Student")
                         .WithMany("Attendance_Test")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

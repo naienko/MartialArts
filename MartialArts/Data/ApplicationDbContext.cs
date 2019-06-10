@@ -30,6 +30,56 @@ namespace MartialArts.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Event>()
+                .HasMany(i => i.Attendance_Test)
+                .WithOne(l => l.Event)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Student>()
+                .HasMany(i => i.Attendance_Test)
+                .WithOne(l => l.Student)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Class>()
+                .HasMany(i => i.Attendance_Classes)
+                .WithOne(l => l.Class)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Student>()
+                .HasMany(i => i.Attendance_Classes)
+                .WithOne(l => l.Student)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Form>()
+                .HasMany(i => i.Students)
+                .WithOne(l => l.Form)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Student>()
+                .HasMany(i => i.Forms)
+                .WithOne(l => l.Student)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Form>()
+                .HasOne(i => i.Style)
+                .WithMany(l => l.Forms)
+                .onDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Style>()
+                .HasMany(i => i.Students)
+                .WithOne(l => l.Style)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Student>()
+                .HasMany(i => i.Styles)
+                .WithOne(l => l.Student)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Event>()
+                .HasMany(i => i.Style)
+                .WithOne(l => l.Event)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Style>()
+                .HasMany(i => i.Events)
+                .WithOne(l => l.Style)
+                .OnDelete(DeleteBehavior.Restrict);
+
             ApplicationUser user = new ApplicationUser
             {
                 FirstName = "Panya",
