@@ -34,11 +34,14 @@ namespace MartialArts.Models
 
         public int InternalRankId { get; set; }
 
+        public virtual ICollection<StudentStyle> StudentStyle { get; set; }
         public virtual ICollection<Style> Styles { get; set; }
 
         public virtual ICollection<Rank> Ranks { get; set; }
 
+        public virtual ICollection<StudentForms> StudentForms { get; set; }
         public virtual ICollection<Form> Forms { get; set; }
 
+        public virtual ICollection<attendance_test> Attendance_Test { get; set; }
     }
 }

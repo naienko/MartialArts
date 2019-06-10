@@ -26,5 +26,6 @@ namespace MartialArts.Models
         public Style Style { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<StudentStyle> StudentStyle { get; set; }
     }
 }
