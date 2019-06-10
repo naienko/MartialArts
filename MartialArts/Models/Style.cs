@@ -16,12 +16,8 @@ namespace MartialArts.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<Student> Students { get; set; }
-
-        public virtual ICollection<Event> Events { get; set; }
-
-        public virtual ICollection<StudentForms> StudentForms { get; set; }
-        public virtual ICollection<StudentStyle> StudentStyle { get; set; }
-        public virtual ICollection<EventStyle> EventStyle { get; set; }
+        public virtual ICollection<StudentForms> Forms { get; set; }
+        public virtual ICollection<StudentStyle> Students { get; set; }
+        public virtual ICollection<EventStyle> Events { get; set; }
     }
 }

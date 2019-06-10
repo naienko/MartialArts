@@ -32,7 +32,7 @@ namespace MartialArts.Models
 
         public Student Staff { get; set; }
 
-        public virtual ICollection<EventStyle> EventStyle { get; set; }
+        public virtual ICollection<EventStyle> Style { get; set; }
         public virtual ICollection<attendance_test> Attendance_Test { get; set; }
 
     }

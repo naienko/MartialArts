@@ -24,6 +24,6 @@ namespace MartialArts.Models
 
         public Rank Rank { get; set; }
 
-        public virtual ICollection<StudentForms> StudentForms { get; set; }
+        public virtual ICollection<StudentForms> Students { get; set; }
     }
 }

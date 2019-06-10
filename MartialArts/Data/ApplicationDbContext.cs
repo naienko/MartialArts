@@ -58,7 +58,7 @@ namespace MartialArts.Data
                     Email = "oddball79@gmail.com",
                     //YYYY-MM-DD HH:MI:SS
                     FirstClass = DateTime.Parse("1990-09-04 00:00:00"),
-                    InternalRankId = 1
+                    InternalRankId = 2
                 },
                 new Student()
                 {
@@ -69,28 +69,28 @@ namespace MartialArts.Data
                     Email = "naienko@gmail.com",
                     //YYYY-MM-DD HH:MI:SS
                     FirstClass = DateTime.Parse("2008-09-04 00:00:00"),
-                    InternalRankId = 0
+                    InternalRankId = 1
                 }
             );
 
             modelBuilder.Entity<Rank>().HasData(
                 new Rank()
                 {
-                    Id = 1,
+                    Id = 2,
                     Name = "Senior Instructor",
                     TimeInRank = "0 invalid",
                     StyleId = 0
                 },
                 new Rank()
                 {
-                    Id = 0,
+                    Id = 1,
                     Name = "Student",
                     TimeInRank = "0 invalid",
                     StyleId = 0
                 },
                 new Rank()
                 {
-                    Id = 2,
+                    Id = 3,
                     Name = "White Belt",
                     TimeInRank = "2 months",
                     StyleId = 1
@@ -100,13 +100,13 @@ namespace MartialArts.Data
             modelBuilder.Entity<Style>().HasData(
                 new Style()
                 {
-                    Id = 0,
+                    Id = 1,
                     Name = "Internal",
                     Description = "pseudo-style to hold ranks internal to the school"
                 },
                 new Style()
                 {
-                    Id = 1,
+                    Id = 2,
                     Name = "Tae Kwon Do",
                     Description = "A style focused on kicking"
                 }
@@ -115,19 +115,19 @@ namespace MartialArts.Data
             modelBuilder.Entity<Class>().HasData(
                 new Class()
                 {
-                    Id = 0,
+                    Id = 1,
                     StartTime = DateTime.Parse("5:30pm"),
                     EndTime = DateTime.Parse("7:00pm"),
                     DayOfWeek = "Tuesday",
-                    StyleId = 1
+                    StyleId = 2
                 },
                 new Class()
                 {
-                    Id = 1,
+                    Id = 2,
                     StartTime = DateTime.Parse("6:00pm"),
                     EndTime = DateTime.Parse("7:00pm"),
                     DayOfWeek = "Wednesday",
-                    StyleId = 1
+                    StyleId = 2
                 }
             );
 
@@ -136,8 +136,8 @@ namespace MartialArts.Data
                 {
                     Id = 1,
                     Name = "Basic One",
-                    StyleId = 1,
-                    RankId = 2
+                    StyleId = 2,
+                    RankId = 3
                 }
             );
 
