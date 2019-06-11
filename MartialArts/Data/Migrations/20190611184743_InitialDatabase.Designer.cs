@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MartialArts.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190610204721_InitialDatabase")]
+    [Migration("20190611184743_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,16 +46,16 @@ namespace MartialArts.Data.Migrations
                         {
                             Id = 1,
                             DayOfWeek = "Tuesday",
-                            EndTime = new DateTime(2019, 6, 10, 19, 0, 0, 0, DateTimeKind.Unspecified),
-                            StartTime = new DateTime(2019, 6, 10, 17, 30, 0, 0, DateTimeKind.Unspecified),
+                            EndTime = new DateTime(2019, 6, 11, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartTime = new DateTime(2019, 6, 11, 17, 30, 0, 0, DateTimeKind.Unspecified),
                             StyleId = 2
                         },
                         new
                         {
                             Id = 2,
                             DayOfWeek = "Wednesday",
-                            EndTime = new DateTime(2019, 6, 10, 19, 0, 0, 0, DateTimeKind.Unspecified),
-                            StartTime = new DateTime(2019, 6, 10, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            EndTime = new DateTime(2019, 6, 11, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartTime = new DateTime(2019, 6, 11, 18, 0, 0, 0, DateTimeKind.Unspecified),
                             StyleId = 2
                         });
                 });
@@ -177,23 +177,23 @@ namespace MartialArts.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 2,
-                            Name = "Senior Instructor",
-                            StyleId = 0,
+                            Id = 1,
+                            Name = "Student",
+                            StyleId = 1,
                             TimeInRank = "0 invalid"
                         },
                         new
                         {
-                            Id = 1,
-                            Name = "Student",
-                            StyleId = 0,
+                            Id = 2,
+                            Name = "Senior Instructor",
+                            StyleId = 1,
                             TimeInRank = "0 invalid"
                         },
                         new
                         {
                             Id = 3,
                             Name = "White Belt",
-                            StyleId = 1,
+                            StyleId = 2,
                             TimeInRank = "2 months"
                         });
                 });
@@ -556,17 +556,17 @@ namespace MartialArts.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3a55babf-d047-4978-b5df-0f27280127bc",
+                            Id = "1aa72924-31fc-4e21-9d8c-a930b9205b42",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b361e5a8-f9e3-497d-8e5a-903f08a8d777",
+                            ConcurrencyStamp = "3bb2d1c7-4ca2-418e-9fd8-b74b4ac8bdef",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENIepB8Ji5a2HIHBsLy45T0cxAXba+i2PXqyiomejudhDap66upouNDrQ8IvvKhchg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEC26SrdaXq0Rt/vuijzoeJ+A6+dakQEymdvAzEhsPZQGcICzy2e2vfnkamnprINTQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a74cb432-ef51-4c44-81d1-102eade258cc",
+                            SecurityStamp = "d1b2fa7d-56c9-4fc1-81fa-f28ca9530f54",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com",
                             Address = "3804 Round Rock Dr Antioch TN 37013",
@@ -579,9 +579,9 @@ namespace MartialArts.Data.Migrations
             modelBuilder.Entity("MartialArts.Models.Class", b =>
                 {
                     b.HasOne("MartialArts.Models.Style", "Style")
-                        .WithMany()
+                        .WithMany("Classes")
                         .HasForeignKey("StyleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("MartialArts.Models.Event", b =>
@@ -613,17 +613,17 @@ namespace MartialArts.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MartialArts.Models.Style", "Style")
-                        .WithMany()
+                        .WithMany("Forms")
                         .HasForeignKey("StyleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("MartialArts.Models.Rank", b =>
                 {
                     b.HasOne("MartialArts.Models.Style", "Style")
-                        .WithMany()
+                        .WithMany("Ranks")
                         .HasForeignKey("StyleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("MartialArts.Models.StudentForms", b =>
@@ -639,7 +639,7 @@ namespace MartialArts.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MartialArts.Models.Style", "Style")
-                        .WithMany("Forms")
+                        .WithMany("StudentForms")
                         .HasForeignKey("StyleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

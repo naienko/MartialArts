@@ -112,7 +112,7 @@ namespace MartialArts.Data.Migrations
                         column: x => x.StyleId,
                         principalTable: "Style",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -133,7 +133,7 @@ namespace MartialArts.Data.Migrations
                         column: x => x.StyleId,
                         principalTable: "Style",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,7 +239,7 @@ namespace MartialArts.Data.Migrations
                         column: x => x.StyleId,
                         principalTable: "Style",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -311,16 +311,7 @@ namespace MartialArts.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "Address", "FirstName", "LastName", "Phone" },
-                values: new object[] { "3a55babf-d047-4978-b5df-0f27280127bc", 0, "b361e5a8-f9e3-497d-8e5a-903f08a8d777", "ApplicationUser", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAENIepB8Ji5a2HIHBsLy45T0cxAXba+i2PXqyiomejudhDap66upouNDrQ8IvvKhchg==", null, false, "a74cb432-ef51-4c44-81d1-102eade258cc", false, "admin@admin.com", "3804 Round Rock Dr Antioch TN 37013", "Panya", "Farnette", "(615) 438-2777" });
-
-            migrationBuilder.InsertData(
-                table: "Rank",
-                columns: new[] { "Id", "Name", "StyleId", "TimeInRank" },
-                values: new object[,]
-                {
-                    { 2, "Senior Instructor", 0, "0 invalid" },
-                    { 1, "Student", 0, "0 invalid" }
-                });
+                values: new object[] { "1aa72924-31fc-4e21-9d8c-a930b9205b42", 0, "3bb2d1c7-4ca2-418e-9fd8-b74b4ac8bdef", "ApplicationUser", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEEC26SrdaXq0Rt/vuijzoeJ+A6+dakQEymdvAzEhsPZQGcICzy2e2vfnkamnprINTQ==", null, false, "d1b2fa7d-56c9-4fc1-81fa-f28ca9530f54", false, "admin@admin.com", "3804 Round Rock Dr Antioch TN 37013", "Panya", "Farnette", "(615) 438-2777" });
 
             migrationBuilder.InsertData(
                 table: "Student",
@@ -345,8 +336,8 @@ namespace MartialArts.Data.Migrations
                 columns: new[] { "Id", "DayOfWeek", "EndTime", "StartTime", "StyleId" },
                 values: new object[,]
                 {
-                    { 1, "Tuesday", new DateTime(2019, 6, 10, 19, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2019, 6, 10, 17, 30, 0, 0, DateTimeKind.Unspecified), 2 },
-                    { 2, "Wednesday", new DateTime(2019, 6, 10, 19, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2019, 6, 10, 18, 0, 0, 0, DateTimeKind.Unspecified), 2 }
+                    { 1, "Tuesday", new DateTime(2019, 6, 11, 19, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2019, 6, 11, 17, 30, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 2, "Wednesday", new DateTime(2019, 6, 11, 19, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2019, 6, 11, 18, 0, 0, 0, DateTimeKind.Unspecified), 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -357,7 +348,12 @@ namespace MartialArts.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Rank",
                 columns: new[] { "Id", "Name", "StyleId", "TimeInRank" },
-                values: new object[] { 3, "White Belt", 1, "2 months" });
+                values: new object[,]
+                {
+                    { 1, "Student", 1, "0 invalid" },
+                    { 2, "Senior Instructor", 1, "0 invalid" },
+                    { 3, "White Belt", 2, "2 months" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Form",
@@ -488,7 +484,7 @@ namespace MartialArts.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "3a55babf-d047-4978-b5df-0f27280127bc");
+                keyValue: "1aa72924-31fc-4e21-9d8c-a930b9205b42");
 
             migrationBuilder.DropColumn(
                 name: "Address",

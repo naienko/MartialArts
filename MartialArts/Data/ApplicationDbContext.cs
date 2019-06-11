@@ -48,6 +48,15 @@ namespace MartialArts.Data
                 .WithOne(l => l.Student)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Class>()
+                .HasOne(i => i.Style)
+                .WithMany(l => l.Classes)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Style>()
+                .HasMany(i => i.Classes)
+                .WithOne(l => l.Style)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Form>()
                 .HasMany(i => i.Students)
                 .WithOne(l => l.Form)
@@ -57,10 +66,14 @@ namespace MartialArts.Data
                 .WithOne(l => l.Student)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Style>()
+                .HasMany(i => i.Forms)
+                .WithOne(l => l.Style)
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Form>()
                 .HasOne(i => i.Style)
                 .WithMany(l => l.Forms)
-                .onDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Style>()
                 .HasMany(i => i.Students)
@@ -77,6 +90,15 @@ namespace MartialArts.Data
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Style>()
                 .HasMany(i => i.Events)
+                .WithOne(l => l.Style)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Rank>()
+                .HasOne(i => i.Style)
+                .WithMany(l => l.Ranks)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Style>()
+                .HasMany(i => i.Ranks)
                 .WithOne(l => l.Style)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -126,24 +148,24 @@ namespace MartialArts.Data
             modelBuilder.Entity<Rank>().HasData(
                 new Rank()
                 {
-                    Id = 2,
-                    Name = "Senior Instructor",
-                    TimeInRank = "0 invalid",
-                    StyleId = 0
-                },
-                new Rank()
-                {
                     Id = 1,
                     Name = "Student",
                     TimeInRank = "0 invalid",
-                    StyleId = 0
+                    StyleId = 1
+                },
+                new Rank()
+                {
+                    Id = 2,
+                    Name = "Senior Instructor",
+                    TimeInRank = "0 invalid",
+                    StyleId = 1
                 },
                 new Rank()
                 {
                     Id = 3,
                     Name = "White Belt",
                     TimeInRank = "2 months",
-                    StyleId = 1
+                    StyleId = 2
                 }
             );
 
