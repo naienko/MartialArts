@@ -14,6 +14,7 @@ namespace MartialArts.Models
         [Required]
         public string Title { get; set; }
 
+        [Display(Name = "Is this event a testing?")]
         public bool IsTesting { get; set; }
 
         [DataType(DataType.DateTime)]

@@ -10,26 +10,23 @@ using MartialArts.Models;
 
 namespace MartialArts.Controllers
 {
-    public class EventsController : Controller
+    public class EventStylesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EventsController(ApplicationDbContext context)
+        public EventStylesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Events
+        // GET: EventStyles
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Event
-                .Include(e => e.Staff)
-                .Include(e => e.Style)
-                .ThenInclude(e => e.Style);
+            var applicationDbContext = _context.EventStyle.Include(e => e.Event).Include(e => e.Style);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Events/Details/5
+        // GET: EventStyles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,43 +34,45 @@ namespace MartialArts.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Event
-                .Include(e => e.Staff)
+            var eventStyle = await _context.EventStyle
+                .Include(e => e.Event)
                 .Include(e => e.Style)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (@event == null)
+            if (eventStyle == null)
             {
                 return NotFound();
             }
 
-            return View(@event);
+            return View(eventStyle);
         }
 
-        // GET: Events/Create
+        // GET: EventStyles/Create
         public IActionResult Create()
         {
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName" + " " + "LastName");
+            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Title");
+            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name");
             return View();
         }
 
-        // POST: Events/Create
+        // POST: EventStyles/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,IsTesting,StartTime,EndTime,Description,Location,LocationNotes,StaffId")] Event @event)
+        public async Task<IActionResult> Create([Bind("Id,EventId,StyleId")] EventStyle eventStyle)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@event);
+                _context.Add(eventStyle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName" + " " + "LastName", @event.StaffId);
-            return View(@event);
+            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Title", eventStyle.EventId);
+            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", eventStyle.StyleId);
+            return View(eventStyle);
         }
 
-        // GET: Events/Edit/5
+        // GET: EventStyles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,23 +80,24 @@ namespace MartialArts.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Event.FindAsync(id);
-            if (@event == null)
+            var eventStyle = await _context.EventStyle.FindAsync(id);
+            if (eventStyle == null)
             {
                 return NotFound();
             }
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName" + " " + "LastName", @event.StaffId);
-            return View(@event);
+            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Title", eventStyle.EventId);
+            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", eventStyle.StyleId);
+            return View(eventStyle);
         }
 
-        // POST: Events/Edit/5
+        // POST: EventStyles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,IsTesting,StartTime,EndTime,Description,Location,LocationNotes,StaffId")] Event @event)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,EventId,StyleId")] EventStyle eventStyle)
         {
-            if (id != @event.Id)
+            if (id != eventStyle.Id)
             {
                 return NotFound();
             }
@@ -106,12 +106,12 @@ namespace MartialArts.Controllers
             {
                 try
                 {
-                    _context.Update(@event);
+                    _context.Update(eventStyle);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventExists(@event.Id))
+                    if (!EventStyleExists(eventStyle.Id))
                     {
                         return NotFound();
                     }
@@ -122,11 +122,12 @@ namespace MartialArts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName" + " " + "LastName", @event.StaffId);
-            return View(@event);
+            ViewData["EventId"] = new SelectList(_context.Event, "Id", "Title", eventStyle.EventId);
+            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", eventStyle.StyleId);
+            return View(eventStyle);
         }
 
-        // GET: Events/Delete/5
+        // GET: EventStyles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,31 +135,32 @@ namespace MartialArts.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Event
-                .Include(e => e.Staff)
+            var eventStyle = await _context.EventStyle
+                .Include(e => e.Event)
+                .Include(e => e.Style)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (@event == null)
+            if (eventStyle == null)
             {
                 return NotFound();
             }
 
-            return View(@event);
+            return View(eventStyle);
         }
 
-        // POST: Events/Delete/5
+        // POST: EventStyles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @event = await _context.Event.FindAsync(id);
-            _context.Event.Remove(@event);
+            var eventStyle = await _context.EventStyle.FindAsync(id);
+            _context.EventStyle.Remove(eventStyle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EventExists(int id)
+        private bool EventStyleExists(int id)
         {
-            return _context.Event.Any(e => e.Id == id);
+            return _context.EventStyle.Any(e => e.Id == id);
         }
     }
 }
