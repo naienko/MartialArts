@@ -15,11 +15,13 @@ namespace MartialArts.Models
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Style")]
         public int StyleId { get; set; }
 
         public Style Style { get; set; }
 
         [Required]
+        [Display(Name = "Rank")]
         public int RankId { get; set; }
 
         public Rank Rank { get; set; }

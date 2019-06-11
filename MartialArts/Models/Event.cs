@@ -17,15 +17,18 @@ namespace MartialArts.Models
         public bool IsTesting { get; set; }
 
         [DataType(DataType.DateTime)]
+        [Display(Name = "Start Time")]
         public DateTime StartTime { get; set; }
 
         [DataType(DataType.DateTime)]
+        [Display(Name = "End Time")]
         public DateTime EndTime { get; set; }
 
         public string Description { get; set; }
 
         public string Location { get; set; }
 
+        [Display(Name = "About Location")]
         public string LocationNotes { get; set; }
 
         public int StaffId { get; set; }

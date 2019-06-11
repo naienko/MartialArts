@@ -33,6 +33,7 @@ namespace MartialArts.Models
         [Display(Name = "Date of First Class Attended")]
         public DateTime FirstClass { get; set; }
 
+        [Display(Name = "School Position")]
         public int InternalRankId { get; set; }
 
         [Required]
