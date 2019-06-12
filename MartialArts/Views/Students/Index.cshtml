@@ -31,7 +31,7 @@
                 @Html.DisplayNameFor(model => model.FirstClass)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InternalRankId)
+                @Html.DisplayNameFor(model => model.Styles.First().Style.Name)
             </th>
             <th></th>
         </tr>
@@ -58,7 +58,10 @@
                 @Html.DisplayFor(modelItem => item.FirstClass)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InternalRankId)
+                @foreach (var styleid in item.Styles)
+                {
+                    @Html.DisplayFor(modelItem => styleid.Style.Name) @Html.DisplayFor(modelItem => styleid.Rank.Name)<br />
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

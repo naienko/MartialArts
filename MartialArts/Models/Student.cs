@@ -19,6 +19,13 @@ namespace MartialArts.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        public string FullName {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+
         [Required]
         public string Address { get; set; }
 

@@ -22,7 +22,12 @@ namespace MartialArts
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Student.ToListAsync());
+            var applicationDbContext = _context.Student
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Style)
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Rank);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Students/Details/5
@@ -34,6 +39,10 @@ namespace MartialArts
             }
 
             var student = await _context.Student
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Style)
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Rank)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
@@ -46,6 +55,8 @@ namespace MartialArts
         // GET: Students/Create
         public IActionResult Create()
         {
+            ViewData["Style"] = new SelectList(_context.Style, "Id", "Name");
+            ViewData["Rank"] = new SelectList(_context.Rank, "Id", "Name");
             return View();
         }
 
