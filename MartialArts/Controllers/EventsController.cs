@@ -133,7 +133,23 @@ namespace MartialArts.Controllers
             {
                 try
                 {
+                    List<EventStyle> StyleList = _context.EventStyle.Where(e => e.EventId == id).ToList();
                     _context.Update(updateEvent.Event);
+
+                    foreach (EventStyle item in StyleList)
+                    {
+                        _context.EventStyle.Remove(item);
+                    }
+                    foreach (int styleid in updateEvent.EventStyle)
+                    {
+                        EventStyle styleForEvent = new EventStyle
+                        {
+                            StyleId = styleid,
+                            EventId = updateEvent.Event.Id
+                        };
+                        _context.EventStyle.Add(styleForEvent);
+                    }
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
