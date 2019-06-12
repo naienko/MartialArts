@@ -32,6 +32,7 @@ namespace MartialArts.Models
         [Display(Name = "About Location")]
         public string LocationNotes { get; set; }
 
+        [Display(Name = "Contact Person")]
         public int StaffId { get; set; }
 
         public Student Staff { get; set; }

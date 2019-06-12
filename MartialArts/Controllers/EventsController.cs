@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MartialArts.Data;
 using MartialArts.Models;
+using MartialArts.Models.ViewModels;
 
 namespace MartialArts.Controllers
 {
@@ -52,7 +53,8 @@ namespace MartialArts.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName" + " " + "LastName");
+            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName");
+            ViewData["Style"] = new SelectList(_context.Style, "Id", "Name");
             return View();
         }
 
@@ -61,16 +63,29 @@ namespace MartialArts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,IsTesting,StartTime,EndTime,Description,Location,LocationNotes,StaffId")] Event @event)
+        public async Task<IActionResult> Create(EventCreateViewModel newEvent)
         {
+            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName", newEvent.Event.StaffId);
+            ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", newEvent.EventStyle);
+            
             if (ModelState.IsValid)
             {
-                _context.Add(@event);
+                _context.Add(newEvent.Event);
+
+                foreach (int styleid in newEvent.EventStyle)
+                {
+                    EventStyle styleForEvent = new EventStyle
+                    {
+                        StyleId = styleid,
+                        EventId = newEvent.Event.Id
+                    };
+                    _context.EventStyle.Add(styleForEvent);
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName" + " " + "LastName", @event.StaffId);
-            return View(@event);
+            return View(newEvent);
         }
 
         // GET: Events/Edit/5
@@ -86,7 +101,7 @@ namespace MartialArts.Controllers
             {
                 return NotFound();
             }
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName" + " " + "LastName", @event.StaffId);
+            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName", @event.StaffId);
             return View(@event);
         }
 
@@ -122,7 +137,7 @@ namespace MartialArts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName" + " " + "LastName", @event.StaffId);
+            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName", @event.StaffId);
             return View(@event);
         }
 
