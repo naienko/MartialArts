@@ -1,4 +1,4 @@
-﻿@model MartialArts.Models.Student
+﻿@model MartialArts.Models.ViewModels.StudentCreateViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,41 +12,44 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Student.Id" />
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="Student.FirstName" class="control-label"></label>
+                <input asp-for="Student.FirstName" class="form-control" />
+                <span asp-validation-for="Student.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="Student.LastName" class="control-label"></label>
+                <input asp-for="Student.LastName" class="form-control" />
+                <span asp-validation-for="Student.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+                <label asp-for="Student.Address" class="control-label"></label>
+                <input asp-for="Student.Address" class="form-control" />
+                <span asp-validation-for="Student.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
+                <label asp-for="Student.Phone" class="control-label"></label>
+                <input asp-for="Student.Phone" class="form-control" />
+                <span asp-validation-for="Student.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Student.Email" class="control-label"></label>
+                <input asp-for="Student.Email" class="form-control" />
+                <span asp-validation-for="Student.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FirstClass" class="control-label"></label>
-                <input asp-for="FirstClass" class="form-control" />
-                <span asp-validation-for="FirstClass" class="text-danger"></span>
+                <label asp-for="Student.FirstClass" class="control-label"></label>
+                <input asp-for="Student.FirstClass" class="form-control" />
+                <span asp-validation-for="Student.FirstClass" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InternalRankId" class="control-label"></label>
-                <input asp-for="InternalRankId" class="form-control" />
-                <span asp-validation-for="InternalRankId" class="text-danger"></span>
+                <label asp-for="StudentStyle" class="control-label"></label>
+                <select asp-for="StudentStyle" class="form-control" asp-items="ViewBag.Style"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentRank" class="control-label"></label>
+                <select asp-for="StudentRank" class="form-control" asp-items="ViewBag.Rank"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

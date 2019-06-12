@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MartialArts.Data;
 using MartialArts.Models;
+using MartialArts.Models.ViewModels;
 
 namespace MartialArts
 {
@@ -55,9 +56,10 @@ namespace MartialArts
         // GET: Students/Create
         public IActionResult Create()
         {
-            ViewData["Style"] = new SelectList(_context.Style, "Id", "Name");
-            ViewData["Rank"] = new SelectList(_context.Rank, "Id", "Name");
-            return View();
+            StudentCreateViewModel newStudent = new StudentCreateViewModel(_context.Style, _context.Rank);
+            //ViewData["Style"] = new SelectList(_context.Style, "Id", "Name");
+            //ViewData["Rank"] = new SelectList(_context.Rank, "Id", "Name");
+            return View(newStudent);
         }
 
         // POST: Students/Create
@@ -65,15 +67,18 @@ namespace MartialArts
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Address,Phone,Email,FirstClass,InternalRankId")] Student student)
+        public async Task<IActionResult> Create(StudentCreateViewModel newStudent)
         {
+            //ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", newStudent.StudentStyle);
+            //ViewData["Rank"] = new SelectList(_context.Rank, "Id", "Name", newStudent.StudentRank);
             if (ModelState.IsValid)
             {
-                _context.Add(student);
+                _context.Add(newStudent);
+                //create StudentStyle object here
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(newStudent);
         }
 
         // GET: Students/Edit/5
@@ -84,12 +89,23 @@ namespace MartialArts
                 return NotFound();
             }
 
-            var student = await _context.Student.FindAsync(id);
-            if (student == null)
+            List<StudentStyle> StyleList = _context.StudentStyle.Where(e => e.StudentId == id).ToList();
+
+            StudentCreateViewModel updateStudent = new StudentCreateViewModel(_context.Style, _context.Rank);
+            updateStudent.Student = await _context.Student.FindAsync(id);
+            
+            foreach (StudentStyle item in StyleList)
+            {
+                updateStudent.StudentStyle.Add(item.StyleId);
+            }
+
+            if (updateStudent.Student == null)
             {
                 return NotFound();
             }
-            return View(student);
+            ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", updateStudent.StudentStyle);
+            ViewData["Rank"] = new SelectList(_context.Rank, "Id", "Name", updateStudent.StudentRank);
+            return View(updateStudent);
         }
 
         // POST: Students/Edit/5
@@ -97,9 +113,9 @@ namespace MartialArts
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Address,Phone,Email,FirstClass,InternalRankId")] Student student)
+        public async Task<IActionResult> Edit(int id, StudentCreateViewModel updateStudent)
         {
-            if (id != student.Id)
+            if (id != updateStudent.Student.Id)
             {
                 return NotFound();
             }
@@ -108,12 +124,12 @@ namespace MartialArts
             {
                 try
                 {
-                    _context.Update(student);
+                    _context.Update(updateStudent);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.Id))
+                    if (!StudentExists(updateStudent.Student.Id))
                     {
                         return NotFound();
                     }
@@ -124,7 +140,7 @@ namespace MartialArts
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(updateStudent);
         }
 
         // GET: Students/Delete/5
