@@ -13,6 +13,6 @@ namespace MartialArts.Models.ViewModels
 
         [Display(Name = "Styles")]
         [Required]
-        public IEnumerable<int> EventStyle { get; set; }
+        public List<int> EventStyle { get; set; } = new List<int>();
     }
 }

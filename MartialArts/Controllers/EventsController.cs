@@ -95,10 +95,17 @@ namespace MartialArts.Controllers
             {
                 return NotFound();
             }
+
+            List<EventStyle> StyleList = _context.EventStyle.Where(e => e.EventId == id).ToList();
+
             EventCreateViewModel updateEvent = new EventCreateViewModel
             {
                 Event = await _context.Event.FindAsync(id)
             };
+            foreach (EventStyle item in StyleList)
+            {
+                updateEvent.EventStyle.Add(item.StyleId);
+            }
 
             //var @event = await _context.Event.FindAsync(id);
             if (updateEvent.Event == null)
