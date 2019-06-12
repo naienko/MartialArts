@@ -15,15 +15,12 @@ namespace MartialArts.Models.ViewModels
         [Required]
         public int StartingStyle { get; set; }
 
-        [Display(Name = "Styles")]
-        [Required]
-        public List<int> StudentStyle { get; set; } = new List<int>();
-        [Display(Name = "Ranks")]
-        [Required]
-        public List<int> StudentRank { get; set; } = new List<int>();
+        public int StartingRank { get; set; }
 
         public List<SelectListItem> StylesList;
         public List<SelectListItem> RanksList;
+
+        public StudentCreateViewModel() { }
         
         public StudentCreateViewModel(DbSet<Style> styles, DbSet<Rank> ranks)
         {

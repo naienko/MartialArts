@@ -47,13 +47,9 @@
                 <select asp-for="StartingStyle" asp-items="@Model.StylesList" class="form-control"></select>
             </div>
             <div class="form-group">
-                <label asp-for="StudentRank" class="control-label"></label>
-                <select asp-for="StudentRank" asp-items="@Model.RanksList" class="form-control"></select>
+                <label asp-for="StartingRank" class="control-label"></label>
+                <select asp-for="StartingRank" asp-items="@Model.RanksList" class="form-control"></select>
             </div>
-            @*<div class="form-group">
-                <label asp-for="StudentRank" class="control-label"></label>
-                <select asp-for="StudentRank" class="form-control" asp-items="ViewBag.Rank"></select>
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -73,8 +73,15 @@ namespace MartialArts
             //ViewData["Rank"] = new SelectList(_context.Rank, "Id", "Name", newStudent.StudentRank);
             if (ModelState.IsValid)
             {
-                _context.Add(newStudent);
+                _context.Add(newStudent.Student);
                 //create StudentStyle object here
+                StudentStyle newstudentStyle = new StudentStyle
+                {
+                    StudentId = newStudent.Student.Id,
+                    StyleId = newStudent.StartingStyle,
+                    RankId = newStudent.StartingRank
+                };
+                _context.StudentStyle.Add(newstudentStyle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -89,22 +96,12 @@ namespace MartialArts
                 return NotFound();
             }
 
-            List<StudentStyle> StyleList = _context.StudentStyle.Where(e => e.StudentId == id).ToList();
-
-            StudentCreateViewModel updateStudent = new StudentCreateViewModel(_context.Style, _context.Rank);
-            updateStudent.Student = await _context.Student.FindAsync(id);
+            Student updateStudent = await _context.Student.FindAsync(id);
             
-            foreach (StudentStyle item in StyleList)
-            {
-                updateStudent.StudentStyle.Add(item.StyleId);
-            }
-
-            if (updateStudent.Student == null)
+            if (updateStudent == null)
             {
                 return NotFound();
             }
-            ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", updateStudent.StudentStyle);
-            ViewData["Rank"] = new SelectList(_context.Rank, "Id", "Name", updateStudent.StudentRank);
             return View(updateStudent);
         }
 
