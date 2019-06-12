@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace MartialArts.Models.ViewModels
         public Event Event { get; set; } = new Event();
 
         [Display(Name = "Styles")]
+        [Required]
         public IEnumerable<int> EventStyle { get; set; }
     }
 }

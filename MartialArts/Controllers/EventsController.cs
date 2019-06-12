@@ -95,14 +95,19 @@ namespace MartialArts.Controllers
             {
                 return NotFound();
             }
+            EventCreateViewModel updateEvent = new EventCreateViewModel
+            {
+                Event = await _context.Event.FindAsync(id)
+            };
 
-            var @event = await _context.Event.FindAsync(id);
-            if (@event == null)
+            //var @event = await _context.Event.FindAsync(id);
+            if (updateEvent.Event == null)
             {
                 return NotFound();
             }
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName", @event.StaffId);
-            return View(@event);
+            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName", updateEvent.Event.StaffId);
+            ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", updateEvent.EventStyle);
+            return View(updateEvent);
         }
 
         // POST: Events/Edit/5
@@ -110,9 +115,9 @@ namespace MartialArts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,IsTesting,StartTime,EndTime,Description,Location,LocationNotes,StaffId")] Event @event)
+        public async Task<IActionResult> Edit(int id, EventCreateViewModel updateEvent)
         {
-            if (id != @event.Id)
+            if (id != updateEvent.Event.Id)
             {
                 return NotFound();
             }
@@ -121,12 +126,12 @@ namespace MartialArts.Controllers
             {
                 try
                 {
-                    _context.Update(@event);
+                    _context.Update(updateEvent.Event);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventExists(@event.Id))
+                    if (!EventExists(updateEvent.Event.Id))
                     {
                         return NotFound();
                     }
@@ -137,8 +142,9 @@ namespace MartialArts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName", @event.StaffId);
-            return View(@event);
+            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FirstName", updateEvent.Event.StaffId);
+            ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", updateEvent.EventStyle);
+            return View(updateEvent);
         }
 
         // GET: Events/Delete/5
