@@ -44,6 +44,8 @@ namespace MartialArts
                 .ThenInclude(e => e.Style)
                 .Include(e => e.Styles)
                 .ThenInclude(e => e.Rank)
+                .Include(e => e.Forms)
+                .ThenInclude(e => e.Form)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
@@ -200,38 +202,73 @@ namespace MartialArts
                 }
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), addStudentRank.StudentId);
+                Student student = new Student
+                {
+                    Id = addStudentRank.StudentId
+                };
+                return RedirectToAction(nameof(Details), student);
             }
             return View(addStudentRank);
         }
 
-        // GET: Students/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Edit Rank &| Forms
+        public async Task<IActionResult> EditRankAndForms(int StudentId, int StyleId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            ViewData["Forms"] = new SelectList(_context.Form.Where(f => f.StyleId == StyleId), "Id", "Name");
+            ViewData["Ranks"] = new SelectList(_context.Rank.Where(f => f.StyleId == StyleId), "Id", "Name");
 
-            var student = await _context.Student
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
-            {
-                return NotFound();
-            }
+            Student student = _context.Student
+                .Include(e => e.Styles)
+                .First(s => s.Id == StudentId);
 
-            return View(student);
+            StudentAddStyle editStudentRank = new StudentAddStyle
+            {
+                StudentId = StudentId,
+                StyleId = StyleId,
+                RankId = student.Styles.First(s => s.StyleId == StyleId).RankId
+            };
+
+            return View(editStudentRank);
         }
 
-        // POST: Students/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        // POST
+        public async Task<IActionResult> EditRankAndForms(StudentAddStyle editStudentRank)
         {
-            var student = await _context.Student.FindAsync(id);
-            _context.Student.Remove(student);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            ViewData["Forms"] = new SelectList(_context.Form.Where(f => f.StyleId == editStudentRank.StyleId), "Id", "Name", editStudentRank.FormsList);
+            ViewData["Ranks"] = new SelectList(_context.Rank.Where(f => f.StyleId == editStudentRank.StyleId), "Id", "Name", editStudentRank.RankId);
+
+            if (ModelState.IsValid)
+            {
+                StudentStyle updatedRank = _context.StudentStyle.First(s => s.StudentId == editStudentRank.StudentId && s.StyleId == editStudentRank.StyleId);
+                updatedRank.RankId = editStudentRank.RankId;
+                _context.StudentStyle.Update(updatedRank);
+
+                List<StudentForms> deleteForms = _context.StudentForms.Where(s => s.StudentId == editStudentRank.StudentId && s.StyleId == editStudentRank.StyleId).ToList();
+                foreach (StudentForms item in deleteForms)
+                {
+                    _context.StudentForms.Remove(item);
+                }
+
+                foreach (int formid in editStudentRank.FormsList)
+                {
+                    StudentForms newForm = new StudentForms
+                    {
+                        StudentId = editStudentRank.StudentId,
+                        StyleId = editStudentRank.StyleId,
+                        FormId = formid
+                    };
+                    _context.StudentForms.Add(newForm);
+                }
+                await _context.SaveChangesAsync();
+                Student student = new Student
+                {
+                    Id = editStudentRank.StudentId
+                };
+                return RedirectToAction(nameof(Details), student);
+            }
+            return View(editStudentRank);
         }
 
         private bool StudentExists(int id)

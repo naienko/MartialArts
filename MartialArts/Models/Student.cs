@@ -19,6 +19,7 @@ namespace MartialArts.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Display(Name = "Name")]
         public string FullName {
             get
             {
@@ -40,7 +41,6 @@ namespace MartialArts.Models
         [Display(Name = "Date of First Class Attended")]
         public DateTime FirstClass { get; set; }
 
-        [Display(Name = "School Position")]
         public int InternalRankId { get; set; }
 
         public virtual ICollection<StudentStyle> Styles { get; set; }

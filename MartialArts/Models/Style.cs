@@ -13,6 +13,7 @@ namespace MartialArts.Models
 
         [Required]
         [StringLength(100)]
+        [Display(Name = "Style")]
         public string Name { get; set; }
         public string Description { get; set; }
 
