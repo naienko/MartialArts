@@ -43,7 +43,6 @@ namespace MartialArts.Models
         [Display(Name = "School Position")]
         public int InternalRankId { get; set; }
 
-        [Required]
         public virtual ICollection<StudentStyle> Styles { get; set; }
         public virtual ICollection<StudentForms> Forms { get; set; }
         public virtual ICollection<attendance_test> Attendance_Test { get; set; }

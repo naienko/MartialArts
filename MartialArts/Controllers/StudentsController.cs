@@ -63,14 +63,10 @@ namespace MartialArts
         }
 
         // POST: Students/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(StudentCreateViewModel newStudent)
         {
-            //ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", newStudent.StudentStyle);
-            //ViewData["Rank"] = new SelectList(_context.Rank, "Id", "Name", newStudent.StudentRank);
             if (ModelState.IsValid)
             {
                 _context.Add(newStudent.Student);
@@ -96,23 +92,21 @@ namespace MartialArts
                 return NotFound();
             }
 
-            Student updateStudent = await _context.Student.FindAsync(id);
+            Student updateStudentPersonal = await _context.Student.FindAsync(id);
             
-            if (updateStudent == null)
+            if (updateStudentPersonal == null)
             {
                 return NotFound();
             }
-            return View(updateStudent);
+            return View(updateStudentPersonal);
         }
 
         // POST: Students/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, StudentCreateViewModel updateStudent)
+        public async Task<IActionResult> Edit(int id, Student updateStudent)
         {
-            if (id != updateStudent.Student.Id)
+            if (id != updateStudent.Id)
             {
                 return NotFound();
             }
@@ -126,7 +120,7 @@ namespace MartialArts
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(updateStudent.Student.Id))
+                    if (!StudentExists(updateStudent.Id))
                     {
                         return NotFound();
                     }
@@ -138,6 +132,77 @@ namespace MartialArts
                 return RedirectToAction(nameof(Index));
             }
             return View(updateStudent);
+        }
+
+        // GET: add a new style to an existing Student
+        public async Task<IActionResult> AddNewStyle(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            StudentAddStyle updateStudentStyle = new StudentAddStyle(_context.Style);
+            updateStudentStyle.StudentId = (int)id;
+
+            if (updateStudentStyle == null)
+            {
+                return NotFound();
+            }
+            return View(updateStudentStyle);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        // PUSH: adds a new bit of data to the model and pushes it to the next view
+        public async Task<IActionResult> AddNewStyle(int id, StudentAddStyle addStudentStyle) { 
+            if (id != addStudentStyle.StudentId)
+            {
+                return NotFound();
+            }
+            return RedirectToAction(nameof(AddRankAndForms),addStudentStyle);
+        }
+
+        // GET: displays new form fields based on the previous page's choice
+        public async Task<IActionResult> AddRankAndForms(int id, StudentAddStyle addStudentRank)
+        {
+            ViewData["Forms"] = new SelectList(_context.Form.Where(f => f.StyleId == addStudentRank.StyleId), "Id", "Name");
+            ViewData["Ranks"] = new SelectList(_context.Rank.Where(f => f.StyleId == addStudentRank.StyleId), "Id", "Name");
+            return View(addStudentRank);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        // POST
+        public async Task<IActionResult> AddRankAndForms(StudentAddStyle addStudentRank)
+        {
+            ViewData["Forms"] = new SelectList(_context.Form.Where(f => f.StyleId == addStudentRank.StyleId), "Id", "Name", addStudentRank.FormsList);
+            ViewData["Ranks"] = new SelectList(_context.Rank.Where(f => f.StyleId == addStudentRank.StyleId), "Id", "Name", addStudentRank.RankId);
+
+            if (ModelState.IsValid)
+            {
+                StudentStyle newStyle = new StudentStyle
+                {
+                    StudentId = addStudentRank.StudentId,
+                    StyleId = addStudentRank.StyleId,
+                    RankId = addStudentRank.RankId
+                };
+                _context.StudentStyle.Add(newStyle);
+
+                foreach (int formid in addStudentRank.FormsList)
+                {
+                    StudentForms newForm = new StudentForms
+                    {
+                        StudentId = addStudentRank.StudentId,
+                        StyleId = addStudentRank.StyleId,
+                        FormId = formid
+                    };
+                    _context.StudentForms.Add(newForm);
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Details), addStudentRank.StudentId);
+            }
+            return View(addStudentRank);
         }
 
         // GET: Students/Delete/5
