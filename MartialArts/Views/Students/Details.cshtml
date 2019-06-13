@@ -34,9 +34,9 @@
     <hr />
     <div>
         <h3>Arts</h3>
+        [ <a asp-action="AddNewStyle" asp-route-id="@Model.Id">Add New Style</a> ]
         @foreach (var item in Model.Styles)
         {
-            <text>[ </text><a asp-action="AddNewStyle" asp-route-id="@Model.Id">Add New Style</a><text> ] [ </text><a asp-action="EditRankAndForms" asp-route-StudentId="@Model.Id" asp-route-StyleId="@item.Style.Id">Edit Rank</a> <text> ]</text>
             <dl class="row">
                 <dt class="col-sm-4">
                     @Html.DisplayFor(model => item.Style.Name)
@@ -45,6 +45,7 @@
                     @Html.DisplayFor(model => item.Rank.Name)
                 </dd>
             </dl>
+            <text>[ </text><a asp-action="EditRankAndForms" asp-route-StudentId="@Model.Id" asp-route-StyleId="@item.Style.Id">Edit Rank</a> <text> ]</text>
             @foreach (var form in Model.Forms)
             {
                 <ul class="list-group">
