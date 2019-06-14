@@ -46,7 +46,7 @@
                 </dd>
             </dl>
             <text>[ </text><a asp-action="EditRankAndForms" asp-route-StudentId="@Model.Id" asp-route-StyleId="@item.Style.Id">Edit Rank</a> <text> ]</text>
-            @foreach (var form in Model.Forms)
+            @foreach (var form in Model.Forms.Where(f => f.Form.StyleId == item.Style.Id))
             {
                 <ul class="list-group">
                     <li class="list-group-item">
