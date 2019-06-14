@@ -143,7 +143,7 @@ namespace MartialArts
 
         // GET: add a new style to an existing Student
         [Authorize]
-        public async Task<IActionResult> AddNewStyle(int? id)
+        public ActionResult AddNewStyle(int? id)
         {
             if (id == null)
             {
@@ -159,11 +159,11 @@ namespace MartialArts
             return View(updateStudentStyle);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         [Authorize]
         // PUSH: adds a new bit of data to the model and pushes it to the next view
-        public async Task<IActionResult> AddNewStyle(int id, StudentAddStyle addStudentStyle) { 
+        public ActionResult AddNewStyle(int id, StudentAddStyle addStudentStyle) { 
             if (id != addStudentStyle.StudentId)
             {
                 return NotFound();
@@ -173,7 +173,7 @@ namespace MartialArts
 
         // GET: displays new form fields based on the previous page's choice
         [Authorize]
-        public async Task<IActionResult> AddRankAndForms(int id, StudentAddStyle addStudentRank)
+        public ActionResult AddRankAndForms(int id, StudentAddStyle addStudentRank)
         {
             ViewData["Forms"] = new SelectList(_context.Form.Where(f => f.StyleId == addStudentRank.StyleId), "Id", "Name");
             ViewData["Ranks"] = new SelectList(_context.Rank.Where(f => f.StyleId == addStudentRank.StyleId), "Id", "Name");

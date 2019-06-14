@@ -42,6 +42,8 @@ namespace MartialArts.Controllers
             var @event = await _context.Event
                 .Include(e => e.Staff)
                 .Include(e => e.Style)
+                .Include(e => e.Attendance_Test)
+                .ThenInclude(e => e.Student)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@event == null)
             {
@@ -70,7 +72,7 @@ namespace MartialArts.Controllers
         {
             ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FullName", newEvent.Event.StaffId);
             ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", newEvent.EventStyle);
-            
+
             if (ModelState.IsValid)
             {
                 _context.Add(newEvent.Event);
@@ -89,6 +91,41 @@ namespace MartialArts.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(newEvent);
+        }
+
+        // GET: Attendance/Test/Create
+        [Authorize]
+        public ActionResult TestAttendance(int EventId)
+        {
+            TestAttendanceViewModel Event = new TestAttendanceViewModel
+            {
+                EventId = EventId,
+                Event = _context.Event.Find(EventId)
+            };
+            ViewData["Students"] = new SelectList(_context.Student, "Id", "FullName");
+            return View(Event);
+        }
+
+        // POST: Attendance/Test
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> TestAttendance(TestAttendanceViewModel model)
+        {
+            ViewData["Students"] = new SelectList(_context.Student, "Id", "FullName", model.AllStudents);
+            model.Event = _context.Event.Find(model.EventId);
+
+            foreach (int StudentId in model.AllStudents)
+            {
+                attendance_test EventAttendance = new attendance_test
+                {
+                    StudentId = StudentId,
+                    EventId = model.EventId
+                };
+                _context.Attendance_Test.Add(EventAttendance);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Events/Edit/5

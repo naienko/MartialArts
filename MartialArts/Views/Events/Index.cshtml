@@ -16,9 +16,6 @@
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsTesting)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.StartTime)
             </th>
             <th>
@@ -49,9 +46,6 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsTesting)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
             <td>
@@ -76,6 +70,10 @@
                 }
             </td>
             <td>
+                @if (item.IsTesting == true)
+                {
+                    <a asp-action="TestAttendance" asp-route-EventId="@item.Id">Attendance</a><text> |</text>
+                }
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
