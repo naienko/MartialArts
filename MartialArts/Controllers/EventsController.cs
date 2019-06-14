@@ -202,7 +202,12 @@ namespace MartialArts.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var @event = await _context.Event.FindAsync(id);
+            List<EventStyle> associatedStyleEntries = _context.EventStyle.Where(e => e.EventId == @event.Id).ToList();
             _context.Event.Remove(@event);
+            foreach (EventStyle item in associatedStyleEntries)
+            {
+                _context.EventStyle.Remove(item);
+            }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

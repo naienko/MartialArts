@@ -17,6 +17,8 @@
     <Compile Remove="Data\Migrations\20190611181013_InitialDatabase.Designer.cs" />
     <Compile Remove="Data\Migrations\20190611182448_InitialDatabase.cs" />
     <Compile Remove="Data\Migrations\20190611182448_InitialDatabase.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190614160438_EventDeleteCascade.cs" />
+    <Compile Remove="Data\Migrations\20190614160438_EventDeleteCascade.Designer.cs" />
   </ItemGroup>
 
 
