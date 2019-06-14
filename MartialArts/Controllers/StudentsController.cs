@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MartialArts.Data;
 using MartialArts.Models;
 using MartialArts.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MartialArts
 {
@@ -56,6 +57,7 @@ namespace MartialArts
         }
 
         // GET: Students/Create
+        [Authorize]
         public IActionResult Create()
         {
             StudentCreateViewModel newStudent = new StudentCreateViewModel(_context.Style, _context.Rank);
@@ -67,6 +69,7 @@ namespace MartialArts
         // POST: Students/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create(StudentCreateViewModel newStudent)
         {
             if (ModelState.IsValid)
@@ -87,6 +90,7 @@ namespace MartialArts
         }
 
         // GET: Students/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -106,6 +110,7 @@ namespace MartialArts
         // POST: Students/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, Student updateStudent)
         {
             if (id != updateStudent.Id)
@@ -137,6 +142,7 @@ namespace MartialArts
         }
 
         // GET: add a new style to an existing Student
+        [Authorize]
         public async Task<IActionResult> AddNewStyle(int? id)
         {
             if (id == null)
@@ -155,6 +161,7 @@ namespace MartialArts
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         // PUSH: adds a new bit of data to the model and pushes it to the next view
         public async Task<IActionResult> AddNewStyle(int id, StudentAddStyle addStudentStyle) { 
             if (id != addStudentStyle.StudentId)
@@ -165,6 +172,7 @@ namespace MartialArts
         }
 
         // GET: displays new form fields based on the previous page's choice
+        [Authorize]
         public async Task<IActionResult> AddRankAndForms(int id, StudentAddStyle addStudentRank)
         {
             ViewData["Forms"] = new SelectList(_context.Form.Where(f => f.StyleId == addStudentRank.StyleId), "Id", "Name");
@@ -174,6 +182,7 @@ namespace MartialArts
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         // POST
         public async Task<IActionResult> AddRankAndForms(StudentAddStyle addStudentRank)
         {
@@ -212,6 +221,7 @@ namespace MartialArts
         }
 
         // GET: Edit Rank &| Forms
+        [Authorize]
         public async Task<IActionResult> EditRankAndForms(int StudentId, int StyleId)
         {
             ViewData["Forms"] = new SelectList(_context.Form.Where(f => f.StyleId == StyleId), "Id", "Name");
@@ -233,6 +243,7 @@ namespace MartialArts
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         // POST
         public async Task<IActionResult> EditRankAndForms(StudentAddStyle editStudentRank)
         {

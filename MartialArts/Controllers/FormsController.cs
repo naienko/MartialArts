@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MartialArts.Data;
 using MartialArts.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MartialArts.Controllers
 {
@@ -20,6 +21,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Forms
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Form.Include(f => f.Rank).Include(f => f.Style);
@@ -27,6 +29,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Forms/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +50,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Forms/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["RankId"] = new SelectList(_context.Rank, "Id", "Name");
@@ -59,6 +63,7 @@ namespace MartialArts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Name,StyleId,RankId")] Form form)
         {
             if (ModelState.IsValid)
@@ -73,6 +78,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Forms/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,6 +101,7 @@ namespace MartialArts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StyleId,RankId")] Form form)
         {
             if (id != form.Id)
@@ -128,6 +135,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Forms/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,6 +158,7 @@ namespace MartialArts.Controllers
         // POST: Forms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var form = await _context.Form.FindAsync(id);

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MartialArts.Data;
 using MartialArts.Models;
 using MartialArts.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MartialArts.Controllers
 {
@@ -51,6 +52,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Events/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FullName");
@@ -63,6 +65,7 @@ namespace MartialArts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create(EventCreateViewModel newEvent)
         {
             ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FullName", newEvent.Event.StaffId);
@@ -89,6 +92,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Events/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -122,6 +126,7 @@ namespace MartialArts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, EventCreateViewModel updateEvent)
         {
             if (id != updateEvent.Event.Id)
@@ -171,6 +176,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Events/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -192,6 +198,7 @@ namespace MartialArts.Controllers
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var @event = await _context.Event.FindAsync(id);

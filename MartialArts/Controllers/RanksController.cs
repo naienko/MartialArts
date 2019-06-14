@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MartialArts.Data;
 using MartialArts.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MartialArts.Controllers
 {
@@ -20,6 +21,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Ranks
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Rank.Include(r => r.Style);
@@ -27,6 +29,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Ranks/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +49,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Ranks/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name");
@@ -70,6 +74,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Ranks/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -91,6 +96,7 @@ namespace MartialArts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,TimeInRank,StyleId")] Rank rank)
         {
             if (id != rank.Id)
@@ -123,6 +129,7 @@ namespace MartialArts.Controllers
         }
 
         // GET: Ranks/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -144,6 +151,7 @@ namespace MartialArts.Controllers
         // POST: Ranks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var rank = await _context.Rank.FindAsync(id);
