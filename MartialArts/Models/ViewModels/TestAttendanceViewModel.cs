@@ -12,5 +12,7 @@ namespace MartialArts.Models.ViewModels
         public List<int> AllStudents { get; set; } = new List<int>();
         public int EventId { get; set; }
         public Event Event { get; set; } = new Event();
+        [Display(Name = "Did everyone pass?")]
+        public bool all_pass { get; set; }
     }
 }

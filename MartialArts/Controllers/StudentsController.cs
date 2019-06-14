@@ -47,6 +47,9 @@ namespace MartialArts
                 .ThenInclude(e => e.Rank)
                 .Include(e => e.Forms)
                 .ThenInclude(e => e.Form)
+                .Include(e => e.Attendance_Test)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(e => e.Style)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {

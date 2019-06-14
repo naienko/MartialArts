@@ -42,6 +42,7 @@ namespace MartialArts.Controllers
             var @event = await _context.Event
                 .Include(e => e.Staff)
                 .Include(e => e.Style)
+                .ThenInclude(e => e.Style)
                 .Include(e => e.Attendance_Test)
                 .ThenInclude(e => e.Student)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -121,6 +122,10 @@ namespace MartialArts.Controllers
                 {
                     StudentId = StudentId,
                     EventId = model.EventId
+                };
+                if (model.all_pass == true)
+                {
+                    EventAttendance.did_pass = true;
                 };
                 _context.Attendance_Test.Add(EventAttendance);
             }

@@ -44,6 +44,32 @@
                 <dd class="col-sm-6">
                     @Html.DisplayFor(model => item.Rank.Name)
                 </dd>
+                <dt class="col-sm-4">
+                    Last Testing Date
+                </dt>
+                <dd class="col-sm-6">
+                    @{List<attendance_test> ThisStyle = new List<attendance_test>();
+
+                        foreach (var TestEvent in Model.Attendance_Test)
+                        {
+                            foreach (var StyleItem in TestEvent.Event.Style)
+                            {
+                                if (StyleItem.StyleId == item.Style.Id)
+                                {
+                                    ThisStyle.Add(TestEvent);
+                                }
+                            }
+                        }
+
+                        @Html.DisplayFor(model => ThisStyle.OrderByDescending(t => t.Event.StartTime).FirstOrDefault().Event.StartTime)
+                    }
+                </dd>
+                <dt class="col-sm-4">
+                    Suggested Next Testing
+                </dt>
+                <dd class="col-sm-6">
+
+                </dd>
             </dl>
             <text>[ </text><a asp-action="EditRankAndForms" asp-route-StudentId="@Model.Id" asp-route-StyleId="@item.Style.Id">Edit Rank</a> <text> ]</text>
             @foreach (var form in Model.Forms.Where(f => f.Form.StyleId == item.Style.Id))
@@ -65,18 +91,6 @@
             </dt>
             <dd class="col-sm-6">
                 @Html.DisplayFor(model => model.FirstClass)
-            </dd>
-            <dt class="col-sm-4">
-                Last Testing date
-            </dt>
-            <dd>
-
-            </dd>
-            <dt class="col-sm-4">
-                Suggested Next Testing
-            </dt>
-            <dd>
-
             </dd>
         </dl>
     </div>

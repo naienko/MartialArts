@@ -80,5 +80,9 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    @if (@Model.IsTesting == true)
+    {
+        <a asp-action="TestAttendance" asp-route-EventId="@Model.Id">Attendance</a><text> |</text>
+    }
     <a asp-action="Index">Back to List</a>
 </div>

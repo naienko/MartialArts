@@ -15,6 +15,11 @@
                 <label asp-for="AllStudents" class="control-label"></label>
                 <select asp-for="AllStudents" asp-items="ViewBag.Students" class="form-control"></select>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="all_pass" /> @Html.DisplayNameFor(model => model.all_pass)
+                </label>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
