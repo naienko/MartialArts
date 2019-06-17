@@ -42,6 +42,7 @@ namespace MartialArts.Models
         public DateTime FirstClass { get; set; }
 
         public int InternalRankId { get; set; }
+        public Rank InternalRank { get; set; }
 
         public virtual ICollection<StudentStyle> Styles { get; set; }
         public virtual ICollection<StudentForms> Forms { get; set; }

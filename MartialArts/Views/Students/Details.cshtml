@@ -5,6 +5,8 @@
 }
 
 <h1>@Html.DisplayFor(model => model.FullName)</h1>
+<h4>@Html.DisplayFor(model => model.InternalRank.Name)</h4>
+<hr />
 
 <div class="col-6">
     <div>
@@ -47,31 +49,59 @@
                 <dt class="col-sm-4">
                     Last Testing Date
                 </dt>
-                <dd class="col-sm-6">
-                    @{List<attendance_test> ThisStyle = new List<attendance_test>();
+                @{List<attendance_test> ThisStyle = new List<attendance_test>();
 
-                        foreach (var TestEvent in Model.Attendance_Test)
+                    foreach (var TestEvent in Model.Attendance_Test)
+                    {
+                        foreach (var StyleItem in TestEvent.Event.Style)
                         {
-                            foreach (var StyleItem in TestEvent.Event.Style)
+                            if (StyleItem.StyleId == item.Style.Id)
                             {
-                                if (StyleItem.StyleId == item.Style.Id)
-                                {
-                                    ThisStyle.Add(TestEvent);
-                                }
+                                ThisStyle.Add(TestEvent);
                             }
                         }
-
-                        @Html.DisplayFor(model => ThisStyle.OrderByDescending(t => t.Event.StartTime).FirstOrDefault().Event.StartTime)
                     }
-                </dd>
-                <dt class="col-sm-4">
-                    Suggested Next Testing
-                </dt>
-                <dd class="col-sm-6">
 
-                </dd>
+                    var LastTestEvent = ThisStyle.OrderByDescending(t => t.Event.StartTime).FirstOrDefault();
+
+                    <text>
+                        <dd class="col-sm-6">@Html.DisplayFor(model => ThisStyle.OrderByDescending(t => t.Event.StartTime).FirstOrDefault().Event.StartTime)</dd>
+                        <dt class="col-sm-4">
+                            Suggested Next Testing
+                        </dt>
+                    </text>
+                    if (LastTestEvent != null)
+                    {
+                        var actualDate = LastTestEvent.Event.StartTime;
+                        string[] splitWaitTime = item.Rank.TimeInRank.Split(' ');
+
+                        if (splitWaitTime[0] == "0")
+                        {
+                            <dd class="col-sm-6">n/a</dd>
+                        }
+                        else
+                        {
+                            if (splitWaitTime[1].Contains("month"))
+                            {
+                                <dd class="col-sm-6">@actualDate.AddMonths(Int32.Parse(splitWaitTime[0])).ToShortDateString()</dd>
+                            }
+                            else if (splitWaitTime[1].Contains("year"))
+                            {
+                                <dd class="col-sm-6">@actualDate.AddYears(Int32.Parse(splitWaitTime[0])).ToShortDateString()</dd>
+                            }
+                            else if (splitWaitTime[1].Contains("day"))
+                            {
+                                <dd class="col-sm-6">@actualDate.AddDays(Int32.Parse(splitWaitTime[0])).ToShortDateString()</dd>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <dd class="col-sm-6">n/a</dd>
+                    }
+                }
             </dl>
-            <text>[ </text><a asp-action="EditRankAndForms" asp-route-StudentId="@Model.Id" asp-route-StyleId="@item.Style.Id">Edit Rank</a> <text> ]</text>
+            <text>[ </text><a asp-action="EditRankAndForms" asp-route-StudentId="@Model.Id" asp-route-StyleId="@item.Style.Id">Edit Rank or Forms Known</a> <text> ]</text>
             @foreach (var form in Model.Forms.Where(f => f.Form.StyleId == item.Style.Id))
             {
                 <ul class="list-group">

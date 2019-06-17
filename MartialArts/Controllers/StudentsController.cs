@@ -50,6 +50,7 @@ namespace MartialArts
                 .Include(e => e.Attendance_Test)
                 .ThenInclude(e => e.Event)
                 .ThenInclude(e => e.Style)
+                .Include(e => e.InternalRank)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
