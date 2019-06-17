@@ -4,53 +4,32 @@
     ViewData["Title"] = "Students";
 }
 
-<h1>Students</h1>
+<h2>Students</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Styles.First().Style.Name)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @foreach (var styleid in item.Styles)
-                {
-                    @Html.DisplayFor(modelItem => styleid.Style.Name)<br />
-}
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="row">
+    @foreach (Student item in Model)
+    {
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header"><a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</a></div>
+                <div class="card-body">
+                    <p>@Html.DisplayFor(modelItem => item.Address)</p>
+                    <p>@Html.DisplayFor(modelItem => item.Phone)</p>
+                    <p>@Html.DisplayFor(modelItem => item.Email)</p>
+                    <h6 class="card-subtitle">Styles</h6>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var styleid in item.Styles)
+                        {
+                        <li class="list-group-item">@Html.DisplayFor(modelItem => styleid.Style.Name)</li>
+                            
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>
