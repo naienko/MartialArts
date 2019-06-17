@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<MartialArts.Models.Student>
 
 @{
-    ViewData["Title"] = "Students";
+    ViewData["Title"] = "InactiveStudents";
 }
 
-<h1>Students</h1>
+<h1>Inactive Students</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -24,16 +21,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Styles.First().Style.Name)
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</a>
+                @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Address)
@@ -45,10 +40,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @foreach (var styleid in item.Styles)
-                {
-                    @Html.DisplayFor(modelItem => styleid.Style.Name)<br />
-}
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="ActivityChange" asp-route-id="@item.Id">Make Active</a>
             </td>
         </tr>
 }

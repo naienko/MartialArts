@@ -28,7 +28,20 @@ namespace MartialArts
                 .Include(e => e.Styles)
                 .ThenInclude(e => e.Style)
                 .Include(e => e.Styles)
-                .ThenInclude(e => e.Rank);
+                .ThenInclude(e => e.Rank)
+                .Where(e => e.Active == true);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        // GET: Inactive Students
+        public async Task<IActionResult> InactiveStudents()
+        {
+            var applicationDbContext = _context.Student
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Style)
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Rank)
+                .Where(e => e.Active == false);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -78,6 +91,7 @@ namespace MartialArts
         {
             if (ModelState.IsValid)
             {
+                newStudent.Student.Active = true;
                 _context.Add(newStudent.Student);
                 //create StudentStyle object here
                 StudentStyle newstudentStyle = new StudentStyle
@@ -284,6 +298,48 @@ namespace MartialArts
                 return RedirectToAction(nameof(Details), student);
             }
             return View(editStudentRank);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        // POST: Change Student Activity
+        public async Task<IActionResult> ActivityChange(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var student = await _context.Student
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Style)
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Rank)
+                .Include(e => e.Forms)
+                .ThenInclude(e => e.Form)
+                .Include(e => e.Attendance_Test)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(e => e.Style)
+                .Include(e => e.InternalRank)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            if (student.Active == true)
+            {
+                student.Active = false;
+                _context.Add(student);
+            } else
+            {
+                student.Active = true;
+                _context.Add(student);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), student);
         }
 
         private bool StudentExists(int id)
