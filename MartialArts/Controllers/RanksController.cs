@@ -59,7 +59,11 @@ namespace MartialArts.Controllers
             {
                 _context.Add(rank);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                Style style = new Style
+                {
+                    Id = rank.StyleId
+                };
+                return RedirectToAction(nameof(Details), "Styles", style);
             }
             ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", rank.StyleId);
             return View(rank);
@@ -114,7 +118,11 @@ namespace MartialArts.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                Style style = new Style
+                {
+                    Id = rank.StyleId
+                };
+                return RedirectToAction(nameof(Details), "Styles", style);
             }
             ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", rank.StyleId);
             return View(rank);
@@ -149,7 +157,11 @@ namespace MartialArts.Controllers
             var rank = await _context.Rank.FindAsync(id);
             _context.Rank.Remove(rank);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            Style style = new Style
+            {
+                Id = rank.StyleId
+            };
+            return RedirectToAction(nameof(Details), "Styles", style);
         }
 
         private bool RankExists(int id)

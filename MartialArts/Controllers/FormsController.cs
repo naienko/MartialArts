@@ -56,13 +56,17 @@ namespace MartialArts.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Name,StyleId,RankId")] Form form)
+        public async Task<IActionResult> Create(Form form)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(form);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                Style style = new Style
+                {
+                    Id = form.StyleId
+                };
+                return RedirectToAction(nameof(Details), "Styles", style);
             }
             ViewData["RankId"] = new SelectList(_context.Rank, "Id", "Name", form.RankId);
             ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", form.StyleId);
@@ -94,7 +98,7 @@ namespace MartialArts.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StyleId,RankId")] Form form)
+        public async Task<IActionResult> Edit(int id, Form form)
         {
             if (id != form.Id)
             {
@@ -119,7 +123,11 @@ namespace MartialArts.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                Style style = new Style
+                {
+                    Id = form.StyleId
+                };
+                return RedirectToAction(nameof(Details), "Styles", style);
             }
             ViewData["RankId"] = new SelectList(_context.Rank, "Id", "Name", form.RankId);
             ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", form.StyleId);
@@ -156,7 +164,11 @@ namespace MartialArts.Controllers
             var form = await _context.Form.FindAsync(id);
             _context.Form.Remove(form);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            Style style = new Style
+            {
+                Id = form.StyleId
+            };
+            return RedirectToAction(nameof(Details), "Styles", style);
         }
 
         private bool FormExists(int id)

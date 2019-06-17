@@ -27,7 +27,8 @@ namespace MartialArts.Controllers
             var applicationDbContext = _context.Event
                 .Include(e => e.Staff)
                 .Include(e => e.Style)
-                .ThenInclude(e => e.Style);
+                .ThenInclude(e => e.Style)
+                .OrderByDescending(e => e.StartTime);
             return View(await applicationDbContext.ToListAsync());
         }
 

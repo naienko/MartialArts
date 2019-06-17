@@ -23,7 +23,8 @@ namespace MartialArts.Controllers
         // GET: Classes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Class.Include(e => e.Style);
+            var applicationDbContext = _context.Class
+                .Include(e => e.Style);
             return View(await applicationDbContext.ToListAsync());
         }
 
