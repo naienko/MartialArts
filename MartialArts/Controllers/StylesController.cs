@@ -35,6 +35,8 @@ namespace MartialArts.Controllers
             }
 
             var style = await _context.Style
+                .Include(c => c.Forms)
+                .Include(c => c.Ranks)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (style == null)
             {

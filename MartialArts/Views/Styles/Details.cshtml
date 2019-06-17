@@ -4,27 +4,54 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>Style</h4>
+    <h3>@Html.DisplayFor(model => model.Name)</h3>
+    <p>@Html.DisplayFor(model => model.Description)</p>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5>Forms</h5>
+                </div>
+                <div class="col-sm-9">
+                    [ <a asp-action="Create" asp-controller="Forms" asp-route-StyleId="@Model.Id">Create New</a> ]
+                </div>
+            </div>
+            <div class="row">
+                @foreach (Form item in Model.Forms)
+                {
+                    <div class="col-sm-4">
+                        <div class="card">
+                            <div class="card-header"><a asp-action="Details" asp-controller="Forms" asp-route-id="@item.Id">@Html.DisplayFor(model => item.Name)</a></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5>Ranks</h5>
+                </div>
+                <div class="col-sm-9">
+                    [ <a asp-action="Create" asp-controller="Ranks" asp-route-StyleId="@Model.Id">Create New</a> ]
+                </div>
+            </div>
+            <div class="row">
+                @foreach (Rank item in Model.Ranks)
+                {
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-header"><a asp-action="Details" asp-controller="Ranks" asp-route-id="@item.Id">@Html.DisplayFor(model => item.Name)</a></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit Style</a> |
     <a asp-action="Index">Back to List</a>
 </div>

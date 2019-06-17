@@ -20,14 +20,6 @@ namespace MartialArts.Controllers
             _context = context;
         }
 
-        // GET: Forms
-        [Authorize]
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Form.Include(f => f.Rank).Include(f => f.Style);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
         // GET: Forms/Details/5
         [Authorize]
         public async Task<IActionResult> Details(int? id)
@@ -51,10 +43,10 @@ namespace MartialArts.Controllers
 
         // GET: Forms/Create
         [Authorize]
-        public IActionResult Create()
+        public IActionResult Create(int StyleId)
         {
             ViewData["RankId"] = new SelectList(_context.Rank, "Id", "Name");
-            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name");
+            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", StyleId);
             return View();
         }
 

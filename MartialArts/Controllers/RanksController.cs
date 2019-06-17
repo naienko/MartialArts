@@ -20,14 +20,6 @@ namespace MartialArts.Controllers
             _context = context;
         }
 
-        // GET: Ranks
-        [Authorize]
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Rank.Include(r => r.Style);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
         // GET: Ranks/Details/5
         [Authorize]
         public async Task<IActionResult> Details(int? id)
@@ -50,18 +42,18 @@ namespace MartialArts.Controllers
 
         // GET: Ranks/Create
         [Authorize]
-        public IActionResult Create()
+        public IActionResult Create(int StyleId)
         {
-            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name");
+
+            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", StyleId);
             return View();
         }
 
         // POST: Ranks/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,TimeInRank,StyleId")] Rank rank)
+        [Authorize]
+        public async Task<IActionResult> Create(Rank rank)
         {
             if (ModelState.IsValid)
             {
