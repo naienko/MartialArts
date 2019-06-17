@@ -4,7 +4,13 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>@Html.DisplayFor(model => model.FullName)</h1>
+<h1>
+    @Html.DisplayFor(model => model.FullName)
+@if (Model.Active == false)
+{
+    <text>(inactive)</text>
+}
+</h1>
 <h4>@Html.DisplayFor(model => model.InternalRank.Name)</h4>
 <hr />
 
@@ -123,6 +129,18 @@
                 @Html.DisplayFor(model => model.FirstClass)
             </dd>
         </dl>
+    </div>
+    <div>
+        <a asp-action="ActivityChange" asp-route-id="@Model.Id">
+            @if (Model.Active == true)
+            {
+                <text>Make Inactive</text>
+            }
+            else
+            {
+                <text>Make Active</text>
+            }
+        </a>
     </div>
 </div>
 <div>

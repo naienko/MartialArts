@@ -44,6 +44,8 @@ namespace MartialArts.Models
         public int InternalRankId { get; set; }
         public Rank InternalRank { get; set; }
 
+        public bool Active { get; set; }
+
         public virtual ICollection<StudentStyle> Styles { get; set; }
         public virtual ICollection<StudentForms> Forms { get; set; }
         public virtual ICollection<attendance_test> Attendance_Test { get; set; }
