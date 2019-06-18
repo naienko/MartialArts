@@ -25,6 +25,7 @@ namespace MartialArts.Models
         [Display(Name = "End Time")]
         public DateTime EndTime { get; set; }
 
+        [Display(Name = "About")]
         public string Description { get; set; }
 
         public string Location { get; set; }
@@ -35,6 +36,7 @@ namespace MartialArts.Models
         [Display(Name = "Contact Person")]
         public int StaffId { get; set; }
 
+        [Display(Name = "Contact Person")]
         public Student Staff { get; set; }
 
         public virtual ICollection<EventStyle> Style { get; set; }

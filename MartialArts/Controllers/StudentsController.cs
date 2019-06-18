@@ -229,18 +229,18 @@ namespace MartialArts
                 }
 
                 await _context.SaveChangesAsync();
-                Student student = new Student
-                {
-                    Id = addStudentRank.StudentId
-                };
-                return RedirectToAction(nameof(Details), student);
+                //Student student = new Student
+                //{
+                //    Id = addStudentRank.StudentId
+                //};
+                return RedirectToAction(nameof(Details), new { id = addStudentRank.StudentId });
             }
             return View(addStudentRank);
         }
 
         // GET: Edit Rank &| Forms
         [Authorize]
-        public async Task<IActionResult> EditRankAndForms(int StudentId, int StyleId)
+        public ActionResult EditRankAndForms(int StudentId, int StyleId)
         {
             ViewData["Forms"] = new SelectList(_context.Form.Where(f => f.StyleId == StyleId), "Id", "Name");
             ViewData["Ranks"] = new SelectList(_context.Rank.Where(f => f.StyleId == StyleId), "Id", "Name");
@@ -300,13 +300,10 @@ namespace MartialArts
             return View(editStudentRank);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // GET: Change Student Activity
         [Authorize]
-        // POST: Change Student Activity
         public async Task<IActionResult> ActivityChange(int? id)
         {
-
             if (id == null)
             {
                 return NotFound();
@@ -329,17 +326,27 @@ namespace MartialArts
                 return NotFound();
             }
 
+            return View(student);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        // POST: Change Student Activity
+        public async Task<IActionResult> ActivityChange(int id)
+        {
+            Student student = await _context.Student.FindAsync(id);
             if (student.Active == true)
             {
                 student.Active = false;
-                _context.Add(student);
+                _context.Update(student);
             } else
             {
                 student.Active = true;
-                _context.Add(student);
+                _context.Update(student);
             }
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Details), student);
+            return RedirectToAction(nameof(Details), new { id = student.Id });
         }
 
         private bool StudentExists(int id)

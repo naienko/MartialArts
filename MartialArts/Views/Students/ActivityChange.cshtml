@@ -1,0 +1,17 @@
+﻿@model MartialArts.Models.Student
+
+@{
+    ViewData["Title"] = "Activity Change";
+}
+
+<h1>Activity Change</h1>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.FullName)</h4>
+    
+    <form asp-action="ActivityChange">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Make @{if (Model.Active == true) { <text>Inactive</text>; } else { <text>Active</text>; } }" class="btn btn-danger" /> |
+        <a asp-action="Details" asp-route-id="@Model.Id">Back to Student</a>
+    </form>
+</div>

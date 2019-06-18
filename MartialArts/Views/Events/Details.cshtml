@@ -1,38 +1,32 @@
 ﻿@model MartialArts.Models.Event
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Event Details";
 }
 
-<h1>Details</h1>
+<h1>@Html.DisplayFor(model => model.Title)</h1>
 
 <div>
-    <h4>Event</h4>
+    <h4>
+        @{ if (Model.IsTesting == true)
+            { <text>Testing</text> }
+        }
+        Event
+    </h4>
     <hr />
+    <p>From @Html.DisplayFor(model => model.StartTime) to @Html.DisplayFor(model => model.EndTime)</p>
+    <p>
+        @foreach (var i in Model.Style)
+        {
+            @Html.DisplayFor(model => i.Style.Name)<br />
+        }
+    </p>
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Staff)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IsTesting)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IsTesting)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EndTime)
+            @Html.DisplayFor(model => model.Staff.FullName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
@@ -52,37 +46,25 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LocationNotes)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Staff)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Staff.FullName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Style.First().Style.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @foreach (var i in Model.Style)
-            {
-                @Html.DisplayFor(model => i.Style.Name)<br />
-            }
-        </dd>
-        <dt class="col-sm-2">
-            Attendees
-        </dt>
-        <dd class="col-sm-10">
-            @foreach (var item in Model.Attendance_Test)
-    {
-            @Html.DisplayFor(model => item.Student.FullName)<br />
-    }
-        </dd>
+        @if (Model.IsTesting == true)
+        {
+            <dt class="col-sm-2">
+                Attendees
+            </dt>
+            <dd class="col-sm-10">
+                @foreach (var item in Model.Attendance_Test)
+                {
+                    @Html.DisplayFor(model => item.Student.FullName)<text> [ <a asp-action="DeleteAttendance" asp-controller="Attendances" asp-route-id="@Model.Id" asp-route-StudentId="@item.Id">Delete</a> ]  </text><br />
+                }
+            </dd>
+        }
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     @if (@Model.IsTesting == true)
     {
-        <a asp-action="TestAttendance" asp-route-EventId="@Model.Id">Attendance</a><text> |</text>
+        <a asp-action="TestAttendance" asp-controller="Attendances" asp-route-EventId="@Model.Id">Attendance</a><text> |</text>
     }
     <a asp-action="Index">Back to List</a>
 </div>

@@ -95,45 +95,6 @@ namespace MartialArts.Controllers
             return View(newEvent);
         }
 
-        // GET: Attendance/Test/Create
-        [Authorize]
-        public ActionResult TestAttendance(int EventId)
-        {
-            TestAttendanceViewModel Event = new TestAttendanceViewModel
-            {
-                EventId = EventId,
-                Event = _context.Event.Find(EventId)
-            };
-            ViewData["Students"] = new SelectList(_context.Student, "Id", "FullName");
-            return View(Event);
-        }
-
-        // POST: Attendance/Test
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> TestAttendance(TestAttendanceViewModel model)
-        {
-            ViewData["Students"] = new SelectList(_context.Student, "Id", "FullName", model.AllStudents);
-            model.Event = _context.Event.Find(model.EventId);
-
-            foreach (int StudentId in model.AllStudents)
-            {
-                attendance_test EventAttendance = new attendance_test
-                {
-                    StudentId = StudentId,
-                    EventId = model.EventId
-                };
-                if (model.all_pass == true)
-                {
-                    EventAttendance.did_pass = true;
-                };
-                _context.Attendance_Test.Add(EventAttendance);
-            }
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         // GET: Events/Edit/5
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
