@@ -190,7 +190,7 @@ namespace MartialArts.Data
                     Id = 1,
                     StartTime = DateTime.Parse("5:30pm"),
                     EndTime = DateTime.Parse("7:00pm"),
-                    DayOfWeek = "Tuesday",
+                    DayOfWeek = 2,
                     StyleId = 2
                 },
                 new Class()
@@ -198,7 +198,7 @@ namespace MartialArts.Data
                     Id = 2,
                     StartTime = DateTime.Parse("6:00pm"),
                     EndTime = DateTime.Parse("7:00pm"),
-                    DayOfWeek = "Wednesday",
+                    DayOfWeek = 3,
                     StyleId = 2
                 }
             );

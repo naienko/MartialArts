@@ -18,10 +18,9 @@ namespace MartialArts.Models
         [DataType(DataType.Time)]
         [Display(Name = "End Time")]
         public DateTime EndTime { get; set; }
-
-        //write custom validator to keep this in days of the week
         [Display(Name = "Day")]
-        public string DayOfWeek { get; set; }
+        [Required]
+        public int DayOfWeek { get; set; }
         [Required]
         [Display(Name = "Style")]
         public int StyleId { get; set; }
