@@ -24,27 +24,9 @@ namespace MartialArts.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Class
-                .Include(e => e.Style);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
-        // GET: Classes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var @class = await _context.Class
                 .Include(e => e.Style)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@class == null)
-            {
-                return NotFound();
-            }
-
-            return View(@class);
+                .OrderByDescending(e => e.DayOfWeek);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Classes/Create
@@ -56,8 +38,6 @@ namespace MartialArts.Controllers
         }
 
         // POST: Classes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Class @class)
@@ -91,12 +71,10 @@ namespace MartialArts.Controllers
         }
 
         // POST: Classes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,StartTime,EndTime,DayOfWeek,StyleId")] Class @class)
+        public async Task<IActionResult> Edit(int id, Class @class)
         {
             if (id != @class.Id)
             {
