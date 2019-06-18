@@ -60,7 +60,7 @@ namespace MartialArts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,StartTime,EndTime,DayOfWeek,StyleId")] Class @class)
+        public async Task<IActionResult> Create(Class @class)
         {
             if (ModelState.IsValid)
             {
