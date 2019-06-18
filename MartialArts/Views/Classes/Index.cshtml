@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<MartialArts.Models.Class>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Classes";
 }
 
-<h1>Index</h1>
+<h1>Classes</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -37,7 +37,10 @@
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DayOfWeek)
+                @{
+                    string stringDay = Enum.GetName(typeof(DayOfWeek), item.DayOfWeek);
+                    <text>@stringDay</text>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Style.Name)
