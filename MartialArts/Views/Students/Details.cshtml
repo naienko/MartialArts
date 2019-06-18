@@ -130,6 +130,7 @@
             </dd>
         </dl>
     </div>
+    <hr />
     <div>
         <a asp-action="ActivityChange" asp-route-id="@Model.Id">
             @if (Model.Active == true)
@@ -140,7 +141,7 @@
             {
                 <text>Make Active</text>
             }
-        </a>
+        </a> | <a asp-action="SchoolRankChange" asp-route-id="@Model.Id">Change School Rank</a>
     </div>
 </div>
 <div>

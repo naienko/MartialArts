@@ -92,6 +92,7 @@ namespace MartialArts
             if (ModelState.IsValid)
             {
                 newStudent.Student.Active = true;
+                newStudent.Student.InternalRankId = 1;
                 _context.Add(newStudent.Student);
                 //create StudentStyle object here
                 StudentStyle newstudentStyle = new StudentStyle
@@ -177,8 +178,8 @@ namespace MartialArts
             return View(updateStudentStyle);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         // PUSH: adds a new bit of data to the model and pushes it to the next view
         public ActionResult AddNewStyle(int id, StudentAddStyle addStudentStyle) { 
@@ -337,6 +338,50 @@ namespace MartialArts
                 student.Active = true;
                 _context.Update(student);
             }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new { id = student.Id });
+        }
+
+        // GET: Change Internal Rank
+        [Authorize]
+        public async Task<IActionResult> SchoolRankChange(int? id)
+        {
+            ViewData["IRank"] = new SelectList(_context.Rank.Where(r => r.StyleId == 1), "Id", "Name");
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var student = await _context.Student
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Style)
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Rank)
+                .Include(e => e.Forms)
+                .ThenInclude(e => e.Form)
+                .Include(e => e.Attendance_Test)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(e => e.Style)
+                .Include(e => e.InternalRank)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            return View(student);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        // POST: Change Student Activity
+        public async Task<IActionResult> SchoolRankChange(Student student)
+        {
+            Student updateStudent = await _context.Student.FindAsync(student.Id);
+            updateStudent.InternalRankId = student.InternalRankId;
+
+            _context.Student.Update(updateStudent);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Details), new { id = student.Id });
         }
