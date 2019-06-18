@@ -229,10 +229,6 @@ namespace MartialArts
                 }
 
                 await _context.SaveChangesAsync();
-                //Student student = new Student
-                //{
-                //    Id = addStudentRank.StudentId
-                //};
                 return RedirectToAction(nameof(Details), new { id = addStudentRank.StudentId });
             }
             return View(addStudentRank);
@@ -291,11 +287,7 @@ namespace MartialArts
                     _context.StudentForms.Add(newForm);
                 }
                 await _context.SaveChangesAsync();
-                Student student = new Student
-                {
-                    Id = editStudentRank.StudentId
-                };
-                return RedirectToAction(nameof(Details), student);
+                return RedirectToAction(nameof(Details), new { id = editStudentRank.StudentId });
             }
             return View(editStudentRank);
         }

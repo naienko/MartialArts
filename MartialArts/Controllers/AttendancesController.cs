@@ -66,16 +66,25 @@ namespace MartialArts.Controllers
 
         // GET: Attendance/Test/Remove
         [Authorize]
-        public async Task<IActionResult> DeleteAttendance(int Id, int StudentId)
+        public ActionResult DeleteAttendance(int id, int StudentId)
         {
-            var @event = await _context.Event
-                .Include(e => e.Staff)
-                .Include(e => e.Style)
-                .ThenInclude(e => e.Style)
-                .Include(e => e.Attendance_Test)
-                .ThenInclude(e => e.Student)
-                .FirstOrDefaultAsync(m => m.Id == Id);
+            var @event = _context.Attendance_Test
+                .Include(e => e.Student)
+                .Include(e => e.Event)
+                .FirstOrDefault(m => m.EventId == id && m.StudentId == StudentId);
             return View(@event);
+        }
+
+        // POST: Attendance/Test/Remove
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> DeleteAttendance(attendance_test model)
+        {
+            var @event = await _context.Attendance_Test.FindAsync(model.Id);
+            _context.Attendance_Test.Remove(@event);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", "Events", new { id = model.EventId });
         }
     }
 }
