@@ -30,27 +30,25 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Style.Name)
-                </td>
-                <td>
-                    @{
-                        string stringDay = Enum.GetName(typeof(DayOfWeek), item.DayOfWeek);
-                        <text>@stringDay</text>
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndTime)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
+            <tr @{if (DateTime.Now.DayOfWeek.ToString() == Enum.GetName(typeof(DayOfWeek), item.DayOfWeek)) { <text>class="table-info"</text>; }}>
+            <td>
+                @Html.DisplayFor(modelItem => item.Style.Name)
+            </td>
+            <td>
+
+                @Enum.GetName(typeof(DayOfWeek), item.DayOfWeek)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>

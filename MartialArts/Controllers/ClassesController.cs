@@ -25,7 +25,8 @@ namespace MartialArts.Controllers
         {
             var applicationDbContext = _context.Class
                 .Include(e => e.Style)
-                .OrderByDescending(e => e.DayOfWeek);
+                .OrderBy(e => e.DayOfWeek)
+                .ThenBy(e => e.StartTime);
             return View(await applicationDbContext.ToListAsync());
         }
 
