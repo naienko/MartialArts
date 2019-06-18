@@ -45,6 +45,7 @@
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
+                <a asp-action="ClassAttendance" asp-controller="Attendances" asp-route-id="@item.Id">Attendance</a> |
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>

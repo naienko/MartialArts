@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MartialArts.Data;
 using MartialArts.Models;
+using MartialArts.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace MartialArts.Controllers
@@ -28,6 +29,39 @@ namespace MartialArts.Controllers
                 .OrderBy(e => e.DayOfWeek)
                 .ThenBy(e => e.StartTime);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+        // GET: Classes/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @class = await _context.Class
+                .Include(c => c.Style)
+                .Include(c => c.Attendance_Classes)
+                .ThenInclude(ac => ac.Student)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (@class == null)
+            {
+                return NotFound();
+            }
+
+            ClassDetailViewModel thisClass = new ClassDetailViewModel
+            {
+                Class = @class,
+                ClassId = (int)id,
+            };
+
+            thisClass.Class.Attendance_Classes.GroupBy(ac => ac.Date, new GroupAttendanceHashSet
+            {
+                Key = 
+            });
+
+            return View(@class);
         }
 
         // GET: Classes/Create

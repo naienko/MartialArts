@@ -15,6 +15,7 @@ namespace MartialArts.Models
         [Required]
         public int ClassId { get; set; }
         public Class Class { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
     }
 }
