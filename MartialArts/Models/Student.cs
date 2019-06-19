@@ -38,9 +38,10 @@ namespace MartialArts.Models
         public string Email { get; set; }
 
         [DataType(DataType.Date)]
-        [Display(Name = "Date of First Class Attended")]
+        [Display(Name = "Date of First Class")]
         public DateTime FirstClass { get; set; }
 
+        [Display(Name = "School Position")]
         public int InternalRankId { get; set; }
         public Rank InternalRank { get; set; }
 

@@ -19,7 +19,7 @@
                     <ul class="list-group list-group-flush">
                         @foreach (var student in date.Attendees)
                         {
-                            <li class="list-group-item mb-2">
+                            <li class="list-group-item p-1">
                                 @student.Student.FullName<text> [ </text>
                                 <a asp-action="RemoveClassAttendance" asp-controller="Attendances" asp-route-id="@student.Id">Delete</a>
                                 <text> ]</text>

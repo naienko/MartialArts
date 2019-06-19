@@ -59,7 +59,7 @@ namespace MartialArts.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FullName");
+            ViewData["StaffId"] = new SelectList(_context.Student.Where(s => s.InternalRankId != 1), "Id", "FullName");
             ViewData["Style"] = new SelectList(_context.Style, "Id", "Name");
             return View();
         }
@@ -72,7 +72,7 @@ namespace MartialArts.Controllers
         [Authorize]
         public async Task<IActionResult> Create(EventCreateViewModel newEvent)
         {
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FullName", newEvent.Event.StaffId);
+            ViewData["StaffId"] = new SelectList(_context.Student.Where(s => s.InternalRankId != 1), "Id", "FullName", newEvent.Event.StaffId);
             ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", newEvent.EventStyle);
 
             if (ModelState.IsValid)
@@ -120,7 +120,7 @@ namespace MartialArts.Controllers
             {
                 return NotFound();
             }
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FullName", updateEvent.Event.StaffId);
+            ViewData["StaffId"] = new SelectList(_context.Student.Where(s => s.InternalRankId != 1), "Id", "FullName", updateEvent.Event.StaffId);
             ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", updateEvent.EventStyle);
             return View(updateEvent);
         }
@@ -174,7 +174,7 @@ namespace MartialArts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StaffId"] = new SelectList(_context.Student, "Id", "FullName", updateEvent.Event.StaffId);
+            ViewData["StaffId"] = new SelectList(_context.Student.Where(s => s.InternalRankId != 1), "Id", "FullName", updateEvent.Event.StaffId);
             ViewData["Style"] = new SelectList(_context.Style, "Id", "Name", updateEvent.EventStyle);
             return View(updateEvent);
         }

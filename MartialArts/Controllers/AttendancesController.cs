@@ -30,7 +30,7 @@ namespace MartialArts.Controllers
                 EventId = EventId,
                 Event = _context.Event.Find(EventId)
             };
-            ViewData["Students"] = new SelectList(_context.Student, "Id", "FullName");
+            ViewData["Students"] = new SelectList(_context.Student.Where(s => s.Active == true), "Id", "FullName");
             return View(Event);
         }
 
@@ -40,7 +40,7 @@ namespace MartialArts.Controllers
         [Authorize]
         public async Task<IActionResult> TestAttendance(TestAttendanceViewModel model)
         {
-            ViewData["Students"] = new SelectList(_context.Student, "Id", "FullName", model.AllStudents);
+            ViewData["Students"] = new SelectList(_context.Student.Where(s => s.Active == true), "Id", "FullName", model.AllStudents);
             model.Event = _context.Event.Find(model.EventId);
 
             foreach (int StudentId in model.AllStudents)
@@ -95,7 +95,7 @@ namespace MartialArts.Controllers
                 .First(c => c.Id == id),
                 DateOfClass = DateTime.Today
             };
-            ViewData["Students"] = new SelectList(_context.Student, "Id", "FullName");
+            ViewData["Students"] = new SelectList(_context.Student.Where(s => s.Active == true), "Id", "FullName");
             return View(specificClass);
         }
 
@@ -105,7 +105,7 @@ namespace MartialArts.Controllers
         [Authorize]
         public async Task<IActionResult> ClassAttendance(ClassAttendanceViewModel model)
         {
-            ViewData["Students"] = new SelectList(_context.Student, "Id", "FullName", model.AllStudents);
+            ViewData["Students"] = new SelectList(_context.Student.Where(s => s.Active == true), "Id", "FullName", model.AllStudents);
             model.Class = _context.Class.Find(model.ClassId);
 
             if (model.DateOfClass > DateTime.Now.AddDays(1))

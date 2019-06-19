@@ -1,4 +1,7 @@
-﻿@model IEnumerable<MartialArts.Models.Style>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model IEnumerable<MartialArts.Models.Style>
 
 @{
     ViewData["Title"] = "Styles";
@@ -19,9 +22,11 @@
                 <div class="card-body">
                     @Html.DisplayFor(modelItem => item.Description)
                     <hr />
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a><text> |</text>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                 </div>
             </div>
         </div>

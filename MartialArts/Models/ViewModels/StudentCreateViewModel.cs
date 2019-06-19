@@ -13,8 +13,10 @@ namespace MartialArts.Models.ViewModels
         public Student Student { get; set; } = new Student();
 
         [Required]
+        [Display(Name = "What style are they starting with?")]
         public int StartingStyle { get; set; }
 
+        [Display(Name = "What rank did they enter the school with?")]
         public int StartingRank { get; set; }
 
         public List<SelectListItem> StylesList;
@@ -45,7 +47,8 @@ namespace MartialArts.Models.ViewModels
 
         public void RankSelectFactory(DbSet<Rank> ranks)
         {
-            RanksList = ranks.Select(li => new SelectListItem
+            var filteredRanks = ranks.Where(r => r.StyleId != 1).ToList();
+            RanksList = filteredRanks.Select(li => new SelectListItem
             {
                 Text = li.Name,
                 Value = li.Id.ToString()

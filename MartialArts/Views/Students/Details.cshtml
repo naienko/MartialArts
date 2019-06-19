@@ -6,10 +6,10 @@
 
 <h1>
     @Html.DisplayFor(model => model.FullName)
-@if (Model.Active == false)
-{
-    <text>(inactive)</text>
-}
+    @if (Model.Active == false)
+    {
+        <text>(inactive)</text>
+    }
 </h1>
 <h4>@Html.DisplayFor(model => model.InternalRank.Name)</h4>
 <hr />
@@ -45,6 +45,7 @@
         [ <a asp-action="AddNewStyle" asp-route-id="@Model.Id">Add New Style</a> ]
         @foreach (var item in Model.Styles)
         {
+            <hr />
             <dl class="row">
                 <dt class="col-sm-4">
                     @Html.DisplayFor(model => item.Style.Name)
@@ -108,14 +109,18 @@
                 }
             </dl>
             <text>[ </text><a asp-action="EditRankAndForms" asp-route-StudentId="@Model.Id" asp-route-StyleId="@item.Style.Id">Edit Rank or Forms Known</a> <text> ]</text>
-            @foreach (var form in Model.Forms.Where(f => f.Form.StyleId == item.Style.Id))
-            {
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        @Html.DisplayFor(model => form.Form.Name)
-                    </li>
-                </ul>
-            }
+            <div class="row">
+                @foreach (var form in Model.Forms.Where(f => f.Form.StyleId == item.Style.Id))
+                {
+                    <div class="col-sm-4">
+                        <div class="card">
+                            <div class="card-header">
+                                @Html.DisplayFor(model => form.Form.Name)
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         }
     </div>
     <hr />
@@ -132,7 +137,7 @@
     </div>
     <hr />
     <div>
-        <a asp-action="ActivityChange" asp-route-id="@Model.Id">
+        <a asp-action="ActivityChange" asp-route-id="@Model.Id" class="btn btn-danger">
             @if (Model.Active == true)
             {
                 <text>Make Inactive</text>
@@ -141,9 +146,9 @@
             {
                 <text>Make Active</text>
             }
-        </a> | <a asp-action="SchoolRankChange" asp-route-id="@Model.Id">Change School Rank</a>
+        </a> <a asp-action="SchoolRankChange" asp-route-id="@Model.Id" class="btn btn-info">Change School Rank</a>
     </div>
 </div>
-<div>
+<div class="mt-4">
     <a asp-action="Index">Back to List</a>
 </div>

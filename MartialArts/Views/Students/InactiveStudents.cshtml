@@ -13,14 +13,16 @@
             <div class="card">
                 <div class="card-header"><a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</a></div>
                 <div class="card-body">
-                    <p>@Html.DisplayFor(modelItem => item.Address)</p>
-                    <p>@Html.DisplayFor(modelItem => item.Phone)</p>
-                    <p>@Html.DisplayFor(modelItem => item.Email)</p>
-                    <h6 class="card-subtitle">Styles</h6>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Address)<br />
+                        @Html.DisplayFor(modelItem => item.Phone)<br />
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </p>
+                    <h6 class="card-subtitle mb-2">Styles</h6>
                     <ul class="list-group list-group-flush">
                         @foreach (var styleid in item.Styles)
                         {
-                            <li class="list-group-item">@Html.DisplayFor(modelItem => styleid.Style.Name)</li>
+                            <li class="list-group-item p-1">@Html.DisplayFor(modelItem => styleid.Style.Name)</li>
 
                         }
                     </ul>

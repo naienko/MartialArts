@@ -13,6 +13,7 @@ namespace MartialArts.Models.ViewModels
         public int ClassId { get; set; }
         public Class Class { get; set; } = new Class();
         [DataType(DataType.Date)]
+        [Display(Name = "Date of Class")]
         public DateTime DateOfClass { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,10 +12,13 @@ namespace MartialArts.Models.ViewModels
     {
         public int StudentId { get; set; }
 
+        [Display(Name = "Style")]
         public int StyleId { get; set; }
 
+        [Display(Name = "Rank")]
         public int RankId { get; set; }
 
+        [Display(Name = "Forms")]
         public List<int> FormsList { get; set; } = new List<int>();
 
         public List<SelectListItem> StylesList;

@@ -1,4 +1,7 @@
-﻿@model MartialArts.Models.Style
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model MartialArts.Models.Style
 
 @{
     ViewData["Title"] = "Details";
@@ -52,6 +55,9 @@
     </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit Style</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit Style</a><text> |</text>
+    }
+<a asp-action="Index">Back to List</a>
 </div>
