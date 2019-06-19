@@ -134,42 +134,42 @@ namespace MartialArts.Controllers
             return View(form);
         }
 
-        // GET: Forms/Delete/5
-        [Authorize]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Forms/Delete/5
+        //[Authorize]
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var form = await _context.Form
-                .Include(f => f.Rank)
-                .Include(f => f.Style)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (form == null)
-            {
-                return NotFound();
-            }
+        //    var form = await _context.Form
+        //        .Include(f => f.Rank)
+        //        .Include(f => f.Style)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (form == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(form);
-        }
+        //    return View(form);
+        //}
 
-        // POST: Forms/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var form = await _context.Form.FindAsync(id);
-            _context.Form.Remove(form);
-            await _context.SaveChangesAsync();
-            Style style = new Style
-            {
-                Id = form.StyleId
-            };
-            return RedirectToAction(nameof(Details), "Styles", style);
-        }
+        //// POST: Forms/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var form = await _context.Form.FindAsync(id);
+        //    _context.Form.Remove(form);
+        //    await _context.SaveChangesAsync();
+        //    Style style = new Style
+        //    {
+        //        Id = form.StyleId
+        //    };
+        //    return RedirectToAction(nameof(Details), "Styles", style);
+        //}
 
         private bool FormExists(int id)
         {

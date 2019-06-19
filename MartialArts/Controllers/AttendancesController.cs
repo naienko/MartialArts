@@ -126,5 +126,28 @@ namespace MartialArts.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Classes");
         }
+
+        // GET: Attendance/Class/Remove
+        [Authorize]
+        public ActionResult RemoveClassAttendance(int id)
+        {
+            var @event = _context.Attendance_Class
+                .Include(e => e.Student)
+                .Include(e => e.Class)
+                .FirstOrDefault(m => m.Id == id);
+            return View(@event);
+        }
+
+        // POST: Attendance/Class/Remove
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> RemoveClassAttendance(attendance_class model)
+        {
+            var @event = await _context.Attendance_Class.FindAsync(model.Id);
+            _context.Attendance_Class.Remove(@event);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", "Classes", new { id = model.ClassId });
+        }
     }
 }

@@ -56,12 +56,16 @@ namespace MartialArts.Controllers
                 ClassId = (int)id,
             };
 
-            thisClass.Class.Attendance_Classes.GroupBy(ac => ac.Date, new GroupAttendanceHashSet
-            {
-                Key = 
-            });
+            thisClass.sortByDates = (
+                from ac in @class.Attendance_Classes
+                group ac by ac.Date into DateGroup
+                select new GroupAttendanceHashSet
+                {
+                    Key = DateGroup.Key,
+                    Attendees = DateGroup.ToList()
+                }).ToList();
 
-            return View(@class);
+            return View(thisClass);
         }
 
         // GET: Classes/Create
@@ -140,37 +144,37 @@ namespace MartialArts.Controllers
             return View(@class);
         }
 
-        // GET: Classes/Delete/5
-        [Authorize]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Classes/Delete/5
+        //[Authorize]
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var @class = await _context.Class
-                .Include(e => e.Style)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@class == null)
-            {
-                return NotFound();
-            }
+        //    var @class = await _context.Class
+        //        .Include(e => e.Style)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (@class == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(@class);
-        }
+        //    return View(@class);
+        //}
 
-        // POST: Classes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var @class = await _context.Class.FindAsync(id);
-            _context.Class.Remove(@class);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //// POST: Classes/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var @class = await _context.Class.FindAsync(id);
+        //    _context.Class.Remove(@class);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool ClassExists(int id)
         {

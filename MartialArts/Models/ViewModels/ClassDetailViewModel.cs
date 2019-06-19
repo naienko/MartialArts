@@ -9,6 +9,6 @@ namespace MartialArts.Models.ViewModels
     {
         public Class Class { get; set; }
         public int ClassId { get; set; }
-        public List<Dictionary<DateTime, List<Student>>> sortByDates { get; set; } = new List<Dictionary<DateTime, List<Student>>>();
+        public List<GroupAttendanceHashSet> sortByDates { get; set; } = new List<GroupAttendanceHashSet>();
     }
 }

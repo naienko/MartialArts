@@ -123,36 +123,36 @@ namespace MartialArts.Controllers
             return View(style);
         }
 
-        // GET: Styles/Delete/5
-        [Authorize]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Styles/Delete/5
+        //[Authorize]
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var style = await _context.Style
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (style == null)
-            {
-                return NotFound();
-            }
+        //    var style = await _context.Style
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (style == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(style);
-        }
+        //    return View(style);
+        //}
 
-        // POST: Styles/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var style = await _context.Style.FindAsync(id);
-            _context.Style.Remove(style);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //// POST: Styles/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var style = await _context.Style.FindAsync(id);
+        //    _context.Style.Remove(style);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool StyleExists(int id)
         {
