@@ -8,8 +8,6 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>attendance_test</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Student)
@@ -27,15 +25,15 @@
             Date
         </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Date.ToShortDateString())
+                @Html.DisplayFor(model => model.Date)
             </dd>
     </dl>
     
-    <form asp-action="DeleteAttendance">
+    <form asp-action="RemoveClassAttendance">
         <input type="hidden" asp-for="Id" value="@Model.Id" />
         <input type="hidden" asp-for="StudentId" value="@Model.StudentId" />
         <input type="hidden" asp-for="ClassId" value="@Model.ClassId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Details" asp-controller="Events" asp-route-id="@Model.ClassId">Back to Event</a>
+        <a asp-action="Details" asp-controller="Events" asp-route-id="@Model.ClassId">Back to Class</a>
     </form>
 </div>

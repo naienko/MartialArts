@@ -80,7 +80,7 @@ namespace MartialArts.Controllers
             var @event = await _context.Attendance_Test.FindAsync(model.Id);
             _context.Attendance_Test.Remove(@event);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Events", new { id = model.EventId });
+            return RedirectToAction("Details", "Events", new { id = @event.EventId });
         }
 
         // GET: Attendance/Class/Create
@@ -147,7 +147,7 @@ namespace MartialArts.Controllers
             var @event = await _context.Attendance_Class.FindAsync(model.Id);
             _context.Attendance_Class.Remove(@event);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Classes", new { id = model.ClassId });
+            return RedirectToAction("Details", "Classes", new { id = @event.ClassId });
         }
     }
 }

@@ -20,7 +20,7 @@
                         @foreach (var student in date.Attendees)
                         {
                             <li class="list-group-item mb-2">
-                                @student.Student.FullName<text>[ </text>
+                                @student.Student.FullName<text> [ </text>
                                 <a asp-action="RemoveClassAttendance" asp-controller="Attendances" asp-route-id="@student.Id">Delete</a>
                                 <text> ]</text>
                             </li>
