@@ -11,7 +11,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a class="btn btn-success" asp-action="Create">Create New</a>
     </p>
 }
 <table class="table">
@@ -35,7 +35,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr @{if (DateTime.Now.DayOfWeek.ToString() == Enum.GetName(typeof(DayOfWeek), item.DayOfWeek)) {<text> class="table-info" </text>} }>
+            <tr @{if (DateTime.Now.DayOfWeek.ToString() == Enum.GetName(typeof(DayOfWeek), item.DayOfWeek)) { <text> class="table-success" </text> } }>
                 <td>
                     @Html.DisplayFor(modelItem => item.Style.Name)
                 </td>
@@ -50,9 +50,11 @@
                     @Html.DisplayFor(modelItem => item.EndTime)
                 </td>
                 <td>
-                    <a asp-action="ClassAttendance" asp-controller="Attendances" asp-route-id="@item.Id">Attendance</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-sm btn-info" asp-action="ClassAttendance" asp-controller="Attendances" asp-route-id="@item.Id">Attendance</a>
+                        <a class="btn btn-sm btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    </div>
                 </td>
             </tr>
         }

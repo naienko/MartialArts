@@ -16,21 +16,23 @@
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-header">
-                    @date.Key.ToShortDateString()
+                    <h5>
+                        @date.Key.ToShortDateString()
+                    </h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         @foreach (var student in date.Attendees)
                         {
-                        <li class="list-group-item p-1">
-                            @student.Student.FullName
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                            <text> [ </text>
-                            <a asp-action="RemoveClassAttendance" asp-controller="Attendances" asp-route-id="@student.Id">Delete</a>
-                            <text> ]</text>
-                            }
-                        </li>
+                            <li class="list-group-item p-1">
+                                @student.Student.FullName
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <text> [ </text>
+                                    <a asp-action="RemoveClassAttendance" asp-controller="Attendances" asp-route-id="@student.Id">Delete</a>
+                                    <text> ]</text>
+                                }
+                            </li>
                         }
                     </ul>
                 </div>
@@ -41,7 +43,7 @@
 <div>
     @if (SignInManager.IsSignedIn(User))
     {
-        <a asp-action="Edit" asp-route-id="@Model.Class.Id">Edit</a><text> |</text>
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Class.Id">Edit</a><text> |</text>
     }
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
 </div>

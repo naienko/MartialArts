@@ -4,10 +4,10 @@
 @model IEnumerable<MartialArts.Models.Event>
 
 @{
-    ViewData["Title"] = "Events";
+    ViewData["Title"] = "Other Events";
 }
 
-<h1>Events</h1>
+<h1>Other Events</h1>
 
 <div class="row">
     @foreach (var item in Model)
@@ -15,16 +15,18 @@
         DateTime whatIsToday = DateTime.Now;
         DateTime withinWeek = whatIsToday.AddDays(7);
         string setHighlightClass = null;
+        string setHighlightBg = null;
         if (item.EndTime < whatIsToday)
         {
             setHighlightClass = "text-muted";
         }
         else if (item.StartTime > whatIsToday && item.StartTime < withinWeek)
         {
-            setHighlightClass = "bg-info text-light";
+            setHighlightClass = "text-light";
+            setHighlightBg = "bg-success";
         }
         <div class="col-sm-4">
-            <div class="card mb-4 @setHighlightClass">
+            <div class="card mb-4 @setHighlightBg @setHighlightClass">
                 <div class="card-header">
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
                 </div>
@@ -38,15 +40,22 @@
                     <p>@Html.DisplayFor(modelItem => item.LocationNotes)</p>
                 </div>
                 <div class="card-footer">
-                    @if (item.EndTime > whatIsToday && SignInManager.IsSignedIn(User))
-                    {
-                        <a class="@setHighlightClass" asp-action="Edit" asp-route-id="@item.Id">Edit</a><text> |</text>
-                    }
-                    <a class="@setHighlightClass" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    @if (item.EndTime > whatIsToday && SignInManager.IsSignedIn(User))
-                    {
-                        <text>| </text><a class="@setHighlightClass" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    }
+                    <div class="btn-group">
+
+                        @if (item.IsTesting == true)
+                        {
+                            <a class="@setHighlightClass btn btn-info btn-sm" asp-action="TestAttendance" asp-route-EventId="@item.Id" asp-controller="Attendances">Attendance</a>
+                        }
+                        @if (item.EndTime > whatIsToday && SignInManager.IsSignedIn(User))
+                        {
+                            <a class="@setHighlightClass btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        }
+                        <a class="@setHighlightClass btn btn-sm btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        @if (item.EndTime > whatIsToday && SignInManager.IsSignedIn(User))
+                        {
+                            <a class="@setHighlightClass btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

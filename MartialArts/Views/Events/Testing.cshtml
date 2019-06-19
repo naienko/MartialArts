@@ -15,41 +15,49 @@
         DateTime whatIsToday = DateTime.Now;
         DateTime withinWeek = whatIsToday.AddDays(7);
         string setHighlightClass = null;
+        string setHighlightBg = null;
         if (item.EndTime < whatIsToday)
         {
             setHighlightClass = "text-muted";
         }
         else if (item.StartTime > whatIsToday && item.StartTime < withinWeek)
         {
-            setHighlightClass = "bg-info text-light";
+            setHighlightClass = "text-light";
+            setHighlightBg = "bg-success";
         }
-    <div class="col-sm-4">
-        <div class="card mb-4 @setHighlightClass">
-            <div class="card-header">
-                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
-            </div>
-            <div class="card-body">
-                @Html.DisplayFor(modelItem => item.StartTime)<text> - </text>@Html.DisplayFor(modelItem => item.EndTime)
-                <hr />
-                <p>@Html.DisplayFor(modelItem => item.Description)</p>
-                <p><b>@Html.DisplayNameFor(model => model.Staff):</b> @Html.DisplayFor(modelItem => item.Staff.FullName)</p>
-                <hr />
-                <p>@Html.DisplayFor(modelItem => item.Location)</p>
-                <p>@Html.DisplayFor(modelItem => item.LocationNotes)</p>
-            </div>
-            <div class="card-footer">
-                <a class="@setHighlightClass" asp-action="TestAttendance" asp-route-EventId="@item.Id" asp-controller="Attendances">Attendance</a> |
-                @if (item.EndTime > whatIsToday && SignInManager.IsSignedIn(User))
-                    {
-                <a class="@setHighlightClass" asp-action="Edit" asp-route-id="@item.Id">Edit</a><text> |</text>
-                    }
-                <a class="@setHighlightClass" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                @if (item.EndTime > whatIsToday && SignInManager.IsSignedIn(User))
-                    {
-                <text>| </text><a class="@setHighlightClass" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    }
+        <div class="col-sm-4">
+            <div class="card mb-4 @setHighlightBg @setHighlightClass">
+                <div class="card-header">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                </div>
+                <div class="card-body">
+                    @Html.DisplayFor(modelItem => item.StartTime)<text> - </text>@Html.DisplayFor(modelItem => item.EndTime)
+                    <hr />
+                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                    <p><b>@Html.DisplayNameFor(model => model.Staff):</b> @Html.DisplayFor(modelItem => item.Staff.FullName)</p>
+                    <hr />
+                    <p>@Html.DisplayFor(modelItem => item.Location)</p>
+                    <p>@Html.DisplayFor(modelItem => item.LocationNotes)</p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group">
+
+                        @if (item.IsTesting == true)
+                        {
+                            <a class="@setHighlightClass btn btn-info btn-sm" asp-action="TestAttendance" asp-route-EventId="@item.Id" asp-controller="Attendances">Attendance</a>
+                        }
+                        @if (item.EndTime > whatIsToday && SignInManager.IsSignedIn(User))
+                        {
+                            <a class="@setHighlightClass btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        }
+                        <a class="@setHighlightClass btn btn-sm btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        @if (item.EndTime > whatIsToday && SignInManager.IsSignedIn(User))
+                        {
+                            <a class="@setHighlightClass btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
     }
 </div>

@@ -13,12 +13,12 @@
     <hr />
     <div class="row">
         <div class="col-6">
-            <div class="row">
-                <div class="col-sm-3">
+            <div class="row mb-1">
+                <div class="col-sm-2">
                     <h5>Forms</h5>
                 </div>
-                <div class="col-sm-9">
-                    [ <a asp-action="Create" asp-controller="Forms" asp-route-StyleId="@Model.Id">Create New</a> ]
+                <div class="col-sm-4">
+                    <a class="btn btn-success btn-sm" asp-action="Create" asp-controller="Forms" asp-route-StyleId="@Model.Id">Create New</a>
                 </div>
             </div>
             <div class="row">
@@ -33,12 +33,12 @@
             </div>
         </div>
         <div class="col-6">
-            <div class="row">
-                <div class="col-sm-3">
+            <div class="row mb-1">
+                <div class="col-sm-2">
                     <h5>Ranks</h5>
                 </div>
-                <div class="col-sm-9">
-                    [ <a asp-action="Create" asp-controller="Ranks" asp-route-StyleId="@Model.Id">Create New</a> ]
+                <div class="col-sm-4">
+                    <a class="btn btn-success btn-sm" asp-action="Create" asp-controller="Ranks" asp-route-StyleId="@Model.Id">Create New</a>
                 </div>
             </div>
             <div class="row">
@@ -57,7 +57,7 @@
 <div>
     @if (SignInManager.IsSignedIn(User))
     {
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit Style</a><text> |</text>
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">Edit Style</a><text> | </text>
     }
-<a asp-action="Index">Back to List</a>
+<a class="btn btn-primary" asp-action="Index">Back to List</a>
 </div>

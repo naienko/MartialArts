@@ -6,25 +6,30 @@
 
 <div class="row justify-content-center">
     <div class="col-4">
-        <h4>Events</h4>
+        <h4>Upcoming Events</h4>
         <div class="card p-2 border-dark bg-light rounded">
             @foreach (var item in Model.Events)
             {
-                <p class="m-0">@Html.DisplayFor(model => item.Title)<br />
-            @Html.DisplayFor(model => item.StartTime)
+                <p class="m-0">
+                    @Html.DisplayFor(model => item.Title)<br />
+                @Html.DisplayFor(model => item.StartTime)
             </p>
             <hr />
-            }
+        }
         </div>
     </div>
     <div class="col-2"></div>
     <div class="col-4">
         <h4>Students</h4>
         <div class="card p-2 border-dark bg-light rounded">
-            @foreach (var item in Model.Students)
-            {
-                <p><a asp-controller="Students" asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(model => item.FullName)</a></p>
-            }
+            <table class="table table-striped">
+                <tbody>
+                    @foreach (var item in Model.Students)
+                    {
+                        <tr><td><a asp-controller="Students" asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(model => item.FullName)</a></td></tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -23,7 +23,9 @@ namespace MartialArts.Controllers
         // GET: Styles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Style.ToListAsync());
+            return View(await _context.Style
+                .Where(s => s.Name != "Internal")
+                .ToListAsync());
         }
 
         // GET: Styles/Details/5

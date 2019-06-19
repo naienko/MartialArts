@@ -10,8 +10,8 @@
     @foreach (Student item in Model)
     {
         <div class="col-sm-4">
-            <div class="card">
-                <div class="card-header"><a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</a></div>
+            <div class="card mb-2">
+                <div class="card-header bg-warning"><a class="text-light" asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</a></div>
                 <div class="card-body">
                     <p>
                         @Html.DisplayFor(modelItem => item.Address)<br />

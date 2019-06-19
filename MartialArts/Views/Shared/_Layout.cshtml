@@ -19,7 +19,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-info border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MartialArts</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -30,10 +30,10 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Students" asp-action="Index">Students</a>
+                            <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Students" asp-action="Index">Students</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="Students" asp-action="Instructors">Instructors</a>
                                 <a class="dropdown-item" asp-controller="Students" asp-action="Index">Active Students</a>
@@ -41,22 +41,18 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Styles" asp-action="Index">Styles</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Styles" asp-action="Index">Styles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Classes" asp-action="Index">Classes</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Classes" asp-action="Index">Classes</a>
                         </li>
-
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Events" asp-action="Index">Events</a>
+                            <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Events" asp-action="Index">Events</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="Events" asp-action="Testing">Testing</a>
                                 <a class="dropdown-item" asp-controller="Events" asp-action="OtherEvents">Other Events</a>
+                                <a class="dropdown-item" asp-controller="Events" asp-action="Index">All Events</a>
                             </div>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
                         </li>
                     </ul>
                 </div>

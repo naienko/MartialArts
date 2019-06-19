@@ -72,7 +72,7 @@ namespace MartialArts.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name");
+            ViewData["StyleId"] = new SelectList(_context.Style.Where(c => c.Id != 1), "Id", "Name");
             return View();
         }
 
@@ -87,7 +87,7 @@ namespace MartialArts.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", @class.StyleId);
+            ViewData["StyleId"] = new SelectList(_context.Style.Where(c => c.Id != 1), "Id", "Name", @class.StyleId);
             return View(@class);
         }
 
@@ -105,7 +105,7 @@ namespace MartialArts.Controllers
             {
                 return NotFound();
             }
-            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", @class.StyleId);
+            ViewData["StyleId"] = new SelectList(_context.Style.Where(c => c.Id != 1), "Id", "Name", @class.StyleId);
             return View(@class);
         }
 
@@ -140,7 +140,7 @@ namespace MartialArts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StyleId"] = new SelectList(_context.Style, "Id", "Name", @class.StyleId);
+            ViewData["StyleId"] = new SelectList(_context.Style.Where(c => c.Id != 1), "Id", "Name", @class.StyleId);
             return View(@class);
         }
 
