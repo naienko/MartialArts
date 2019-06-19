@@ -32,6 +32,30 @@ namespace MartialArts.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // GET: Testing
+        public async Task<IActionResult> Testing()
+        {
+            var applicationDbContext = _context.Event
+                .Include(e => e.Staff)
+                .Include(e => e.Style)
+                .ThenInclude(e => e.Style)
+                .Where(e => e.IsTesting == true)
+                .OrderByDescending(e => e.StartTime);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        // GET: Events
+        public async Task<IActionResult> OtherEvents()
+        {
+            var applicationDbContext = _context.Event
+                .Include(e => e.Staff)
+                .Include(e => e.Style)
+                .ThenInclude(e => e.Style)
+                .Where(e => e.IsTesting == false)
+                .OrderByDescending(e => e.StartTime);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
         // GET: Events/Details/5
         public async Task<IActionResult> Details(int? id)
         {

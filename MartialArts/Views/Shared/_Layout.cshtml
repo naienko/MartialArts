@@ -35,6 +35,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Students" asp-action="Index">Students</a>
                             <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-controller="Students" asp-action="Instructors">Instructors</a>
                                 <a class="dropdown-item" asp-controller="Students" asp-action="Index">Active Students</a>
                                 <a class="dropdown-item" asp-controller="Students" asp-action="InactiveStudents">Inactive Students</a>
                             </div>
@@ -45,6 +46,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Classes" asp-action="Index">Classes</a>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" asp-controller="Events" asp-action="Index">Events</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-controller="Events" asp-action="Testing">Testing</a>
+                                <a class="dropdown-item" asp-controller="Events" asp-action="OtherEvents">Other Events</a>
+                            </div>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
                         </li>

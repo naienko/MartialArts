@@ -45,6 +45,18 @@ namespace MartialArts
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // GET: Instructors
+        public async Task<IActionResult> Instructors()
+        {
+            var applicationDbContext = _context.Student
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Style)
+                .Include(e => e.Styles)
+                .ThenInclude(e => e.Rank)
+                .Where(e => e.Active == true && e.InternalRankId != 1);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
         // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)
         {
