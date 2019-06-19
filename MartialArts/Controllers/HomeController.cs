@@ -23,7 +23,7 @@ namespace MartialArts.Controllers
             IndexModel frontPage = new IndexModel
             {
                 Students = _context.Student.Where(s => s.Active == true).ToList(),
-                Events = _context.Event.Where(e => e.StartTime > DateTime.Now).OrderByDescending(e => e.StartTime).ToList()
+                Events = _context.Event.Where(e => e.StartTime > DateTime.Now && e.StartTime < DateTime.Now.AddMonths(1)).OrderBy(e => e.StartTime).ToList()
             };
             return View(frontPage);
         }
