@@ -7,10 +7,12 @@
     ViewData["Title"] = "Styles";
 }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
+@if (SignInManager.IsSignedIn(User))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
 <div class="row">
     @foreach (var item in Model)
     {

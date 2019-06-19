@@ -1,4 +1,7 @@
-﻿@model MartialArts.Models.ViewModels.ClassDetailViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model MartialArts.Models.ViewModels.ClassDetailViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -19,11 +22,15 @@
                     <ul class="list-group list-group-flush">
                         @foreach (var student in date.Attendees)
                         {
-                            <li class="list-group-item p-1">
-                                @student.Student.FullName<text> [ </text>
-                                <a asp-action="RemoveClassAttendance" asp-controller="Attendances" asp-route-id="@student.Id">Delete</a>
-                                <text> ]</text>
-                            </li>
+                        <li class="list-group-item p-1">
+                            @student.Student.FullName
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                            <text> [ </text>
+                            <a asp-action="RemoveClassAttendance" asp-controller="Attendances" asp-route-id="@student.Id">Delete</a>
+                            <text> ]</text>
+                            }
+                        </li>
                         }
                     </ul>
                 </div>
@@ -32,6 +39,9 @@
     }
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Class.Id">Edit</a> |
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Class.Id">Edit</a><text> |</text>
+    }
     <a asp-action="Index">Back to List</a>
 </div>

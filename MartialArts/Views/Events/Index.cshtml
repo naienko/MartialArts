@@ -1,4 +1,7 @@
-﻿@model IEnumerable<MartialArts.Models.Event>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model IEnumerable<MartialArts.Models.Event>
 
 @{
     ViewData["Title"] = "Events";
@@ -6,9 +9,12 @@
 
 <h1>Events</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (SignInManager.IsSignedIn(User))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
 <div class="row">
     @foreach (var item in Model)
     {
@@ -42,12 +48,12 @@
                     {
                         <a class="@setHighlightClass" asp-action="TestAttendance" asp-route-EventId="@item.Id" asp-controller="Attendances">Attendance</a><text> |</text>
                     }
-                    @if (item.EndTime > whatIsToday)
+                    @if (item.EndTime > whatIsToday && SignInManager.IsSignedIn(User))
                     {
                         <a class="@setHighlightClass" asp-action="Edit" asp-route-id="@item.Id">Edit</a><text> |</text>
                     }
                     <a class="@setHighlightClass" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    @if (item.EndTime > whatIsToday)
+                    @if (item.EndTime > whatIsToday && SignInManager.IsSignedIn(User))
                     {
                         <text>| </text><a class="@setHighlightClass" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     }

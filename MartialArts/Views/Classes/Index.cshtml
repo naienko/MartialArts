@@ -1,14 +1,19 @@
-﻿@model IEnumerable<MartialArts.Models.Class>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model IEnumerable<MartialArts.Models.Class>
 
 @{
     ViewData["Title"] = "Classes";
 }
 
 <h1>Classes</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (SignInManager.IsSignedIn(User))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -30,26 +35,26 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr @{if (DateTime.Now.DayOfWeek.ToString() == Enum.GetName(typeof(DayOfWeek), item.DayOfWeek)) { <text>class="table-info"</text>; }}>
-            <td>
-                @Html.DisplayFor(modelItem => item.Style.Name)
-            </td>
-            <td>
+            <tr @{if (DateTime.Now.DayOfWeek.ToString() == Enum.GetName(typeof(DayOfWeek), item.DayOfWeek)) {<text> class="table-info" </text>} }>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Style.Name)
+                </td>
+                <td>
 
-                @Enum.GetName(typeof(DayOfWeek), item.DayOfWeek)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                <a asp-action="ClassAttendance" asp-controller="Attendances" asp-route-id="@item.Id">Attendance</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-            </td>
-        </tr>
-    }
+                    @Enum.GetName(typeof(DayOfWeek), item.DayOfWeek)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    <a asp-action="ClassAttendance" asp-controller="Attendances" asp-route-id="@item.Id">Attendance</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
